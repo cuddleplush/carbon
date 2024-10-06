@@ -1,0 +1,134 @@
+/* @import "colors.scss"; */
+
+.ctrl-box {
+  background-color: $bg;
+  padding: 8px 8px 8px 8px;
+}
+
+.ctrl-header {
+  background-color: $bg2;
+  padding-right: 11px;
+  margin: 0 0 8px 0;
+  min-width: 260px;
+}
+
+.ctrl-volsliders {
+  background-color: $bg2;
+  padding: 0 16px 0 8px;
+}
+
+.volicon {
+  padding: 0 10px 0 0;
+  min-width: 18px;
+  font-size: 18px;
+}
+
+.pic {
+  padding-right: 10px;
+  font-size: 70px;
+}
+
+.ctrl-btn label { transition: all 300ms cubic-bezier(0, 0, 0.2, 1); }
+.ctrl-btn {
+  background-color: $bg2;
+  padding: 8px;
+  min-width: 82px;
+  transition: all 300ms cubic-bezier(0, 0, 0.2, 1);
+  &:checked {
+    background-color: $fg;
+    label { color: $bg; }
+  }
+  &:not(:checked):hover {
+    background-color: $bg4;
+  }
+}
+
+.wp-btn {
+  background-color: $bg2;
+  padding: 5px;
+  min-width: 21px;
+  min-height: 21px;
+  transition: all 300ms cubic-bezier(0, 0, 0.2, 1);
+  &:hover {
+    background-color: $bg4;
+  }
+}
+
+scale {
+  min-height: 2px;
+  min-width: 2px;
+  padding: 17px 0px;
+}
+
+scale slider {
+  min-height: 11px;
+  min-width: 11px;
+  margin: -5px;
+  background-color: $bg2;
+  border: solid 2px $fg;
+}
+
+scale trough {
+  transition: background-color 75ms cubic-bezier(0, 0, 0.2, 1);
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+scale highlight {
+  transition: background-image 75ms cubic-bezier(0, 0, 0.2, 1);
+  background-image: image(#E0E0E0);
+}
+
+scale indicator {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: transparent;
+}
+
+.player {
+    // min-width: 100px;
+    // min-height: 100px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-top: 8px;
+    // border-radius: 13px;
+    // margin-right: 1em;
+}
+
+.player .title, .artist, .position {
+  padding-left: 4px;
+}
+
+.player .artist {
+    // font-size: 1.1em;
+    color: $fg;
+    padding-bottom: 20px;
+}
+
+.player scale.position {
+    padding: 0;
+    // margin-bottom: .3em;
+}
+
+.player scale.position trough {
+    min-height: 6px;
+}
+
+.player scale.position highlight {
+    background-color: $fg;
+}
+
+.player scale.position slider {
+    all: unset;
+}
+
+.player button {
+    min-height: 1em;
+    min-width: 1em;
+    padding: .3em;
+}
+
+.player button.play-pause {
+    margin: 0 .3em;
+}
+

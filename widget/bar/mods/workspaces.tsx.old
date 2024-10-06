@@ -2,37 +2,25 @@ import { execAsync, Gtk, Variable, bind } from "astal"
 import Hyprland from "gi://AstalHyprland";
 const hyprland = Hyprland.get_default();
 
-// function ws(id: number) {
-//     const hyprland = Hyprland.get_default();
-//     const get = () => hyprland.get_workspace(id) || Hyprland.Workspace.dummy(id, null);
-//
-//     return Variable(get())
-//         .observe(hyprland, "workspace-added", get)
-//         .observe(hyprland, "workspace-removed", get);
-// }
-//
-// function className(i: number) { Variable.derive([
-// 	bind(hyprland, "focusedWorkspace"),
-// ], (focused) => `
-// 	${focused.id === i ? "ws-button active" : "ws-button"}
-// 	workspacebutton
-// `)}
-		// className={hyprland.focusedWorkspace.id === i ? "ws-button active" : "ws-button"}
-
-
 function WorkspaceButton(i: number, monitor: number): JSX.Element { 
 	const dispatch = (ws: string | number) => { execAsync(`hyprctl dispatch workspace ${ws}`)};
 	const icons = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
 	const iconIndex = i - (monitor * 10 + 1);
+	const activews = bind(hyprland, "focusedWorkspace")
+	const clients = bind(hyprland.get_workspace(i), "clients")
+
 	return <box>
 		<button
 		onHover={(self) => self.toggleClassName("hover", true)}
 		onHoverLost={(self) => self.toggleClassName("hover", false)}
 
-		// className={className(i)}
-		// className={hyprland.focusedWorkspace.id === i ? "ws-button active" : "ws-button"}
-		// className={bind(hyprland, "focusedWorkspace").as(n => n.id === i) ? "ws-button active" : "ws-button"}
-		// setup={}
+		className={activews.as(w => w.id === i ? "ws-button active" : "ws-button")}
+		// className={"ws-button"}
+		// setup={(self) => {
+		// 	self.toggleClassName("active",  activews.as(w => w.id === i).get())
+		// 	self.toggleClassName("occupied", clients.as(c => c.length > 0).get())
+		// }}
+		// className={classname(i)}
 		onClick={() => dispatch(i)} >
 		<label label={icons[iconIndex]} />
 		</button>

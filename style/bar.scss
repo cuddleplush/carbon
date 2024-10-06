@@ -1,11 +1,52 @@
-@import "colors.scss";
+/* @import "colors.scss"; */
 
 window.Bar {
-	background-color: $bg;
+    background-color: $bg;
+    @if $bar-split {
+      background-color: transparent;
+    }
 	color: $fg;
     >centerbox {
     min-height: 45px;
     padding: 0px 8px 0px 8px;
+  }
+}
+
+@if $bar-split {
+  .modules-1,
+  .modules-2,
+  .modules-3,
+  .modules-4,
+  .modules-5 {
+    background-color: $bg;
+  }
+
+  .modules-1 {
+    margin: 0 0 0 -8px;
+    padding: 0 8px 0 8px;
+  }
+  .modules-2 {
+    padding: 0 8px 0 8px;
+  }
+  .modules-3 {
+    padding: 0 8px 0 8px;
+    background-color: transparent;
+  }
+  .modules-4 {
+    padding: 0 8px 0 8px;
+  }
+  .modules-5 {
+    padding: 0 8px 0 8px;
+    margin-right: -8px;
+  }
+  .mprisbox {
+    background-color: $bg;
+    padding: 0 8px 0 8px;
+    margin: 0 -8px 0 -8px;
+  }
+  .micbox {
+    background-color: $bg;
+    padding: 0 8px 0 8px;
   }
 }
 
@@ -25,11 +66,27 @@ window.Bar {
   background-color: $bg2;
   padding-top: 1px;
   font-size: 15px;
-  &.hover {
+
+  &.active {
+    background-color: $bg3;
+    &:hover {
+      background-color: $bg4;
+    }
+  }
+
+  &:hover {
     background-color: $bg4;
     label {
       font-weight: bold;
     }
+  }
+  
+  &.empty {
+    margin-left: 0px;
+  }
+
+  &.muted {
+    color: $red;
   }
 
   &.ctrl {
@@ -39,7 +96,7 @@ window.Bar {
     background-color: $bg3;
     font-size: 20px;
 
-    &.hover {
+    &:hover {
       background-color: $bg4;
     }
   }
@@ -74,13 +131,54 @@ window.Bar {
     }
   }
 
-  &:not(.active).hover {
+  &:not(.active):hover {
     label {
       background-color: $bg4;
       font-weight: bold;
       color: $fg;
     }
   }
+}
+
+.toggles {
+  margin-top: 8px;
+}
+
+.togglebtn {
+  transition: background-color 300ms cubic-bezier(0, 0, 0.2, 1);
+  background-color: $bg2;
+  min-width: 60px;
+  min-height: 30px;
+  label {
+    transition: background-color 300ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  &:not(.active):hover {
+    label {
+      background-color: $bg4;
+      font-weight: bold;
+      color: $fg;
+    }
+  }
+
+  &.active {
+    color: $bg;
+    background-color: $fg;
+    label {
+      font-weight: bold;
+    }
+    &:hover {
+      background-color: transparentize($fg, 0.3);
+      label {
+        font-weight: bold;
+      }
+    }
+  }
+
+}
+
+tooltip {
+  background-color: $bg;
 }
 
 
