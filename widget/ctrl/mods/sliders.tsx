@@ -1,4 +1,4 @@
-import { Gtk, Variable, exec, bind, execAsync } from "astal"
+import { bind } from "astal"
 import Wp from "gi://AstalWp"
 
 export function sliders(type: string) {

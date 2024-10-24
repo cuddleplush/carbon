@@ -1,4 +1,4 @@
-import { App, Gtk, Gdk, Astal } from "astal"
+import { App, Gdk, Astal } from "astal/gtk3"
 import { header } from "./mods/header";
 import { sliders } from "./mods/sliders";
 import { toggles } from "./mods/toggles";

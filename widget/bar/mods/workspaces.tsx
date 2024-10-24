@@ -1,4 +1,4 @@
-import { bind, execAsync, Variable } from "astal";
+import { bind, Variable } from "astal";
 import Hyprland from "gi://AstalHyprland";
 import { easyAsync } from "../../../utils";
 
@@ -32,9 +32,6 @@ export function Workspaces(monitor: number) {
                 ${clients.length > 0 ? "ws-button occupied" : "ws-button"}`)
             return (
                 <button
-					// onHover={(self) => self.toggleClassName("hover", true)}
-					// onHoverLost={(self) => self.toggleClassName("hover", false)}
-
                     className={className()}
 					label={icons[iconIndex]}
 					onClick={() => dispatch(id)}>
@@ -44,8 +41,8 @@ export function Workspaces(monitor: number) {
     }
 
 	const workspaceButtons = (Array.from({ length: 5 }, (_, idx) => {
-				const id = idx + (monitor * 10 + 1);
-				return workspaceButton(id, monitor)}))
+		const id = idx + (monitor * 10 + 1);
+		return workspaceButton(id, monitor)}))
 
     return (<box spacing={8} >
         {workspaceButtons}

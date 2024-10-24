@@ -1,4 +1,4 @@
-import { bind, execAsync } from "astal"
+import { bind } from "astal"
 import Hyprland from "gi://AstalHyprland";
 import { easyAsync } from "../../../utils";
 const hyprland = Hyprland.get_default()
@@ -20,10 +20,8 @@ function Task(client: any): JSX.Element {
 		<button
 			label={client?.class
 				.replace("footclient", "foot")
-				.replace("com.obsproject.Studio", "OBS")
-				.replace("org.prismlauncher.PrismLauncher", "prism")
-				.replace("org.gnome.", "")
-				.replace("org.fooyin.fooyin", "fooyin")
+				.replace("com.obsproject.Studio", "obs")
+				.replace(/.*\..*?\.(.*)/, '$1')
 				.toLowerCase()
 			} >
 		</button>

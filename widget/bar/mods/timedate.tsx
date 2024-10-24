@@ -12,9 +12,6 @@ export function Date(): JSX.Element {
 		<box>
 			<label label={"󱪺"} className={"icon date"} />
 			<button		
-				// onHover={(self) => self.toggleClassName("hover", true)}
-				// onHoverLost={(self) => self.toggleClassName("hover", false)}
-
 				className={"module clock"}
 				tooltipText={"Open Calendar"}
 				onClick={() => easyAsync("gnome-calendar")} >
@@ -24,9 +21,6 @@ export function Date(): JSX.Element {
 		<box>
 			<label label={"󱑎"} className={"icon clock"} />
 			<button		
-				// onHover={(self) => self.toggleClassName("hover", true)}
-				// onHoverLost={(self) => self.toggleClassName("hover", false)}
-
 				className={"module date"}
 				tooltipText={"Open Clocks"}
 				onClick={() => easyAsync("gnome-clocks")} >

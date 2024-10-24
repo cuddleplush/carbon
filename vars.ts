@@ -22,12 +22,8 @@ export default {
 
 export const barFloat = Variable(false)
 export const barSplit = Variable(false)
-export const darkMode = Variable(true)
 
 barSplit.subscribe((value: boolean) => {
-	applyStyle(value, darkMode.get())
+	applyStyle(value)
 })
 
-darkMode.subscribe((value: boolean) => {
-	applyStyle(barSplit.get(), value)
-})

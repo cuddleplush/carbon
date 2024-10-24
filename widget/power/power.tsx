@@ -1,4 +1,4 @@
-import { Gtk, Astal, App } from "astal"
+import { Gtk, Astal, App } from "astal/gtk3"
 import { easyAsync } from "../../utils"
 
 function powerItem(icon: string, exec: string) {
@@ -31,11 +31,6 @@ export default function power() {
 		keymode={Astal.Keymode.EXCLUSIVE}
 		layer={Astal.Layer.OVERLAY}
 		application={App} >
-		{/*onKeyPressEvent={(_, event) => {
-			if (event.get_keyval()[1] === Gdk.KEY_Escape) {
-				App.toggle_window("power");
-			}
-		}} > */ }
 		{powerBox()}
 	</window>
 }

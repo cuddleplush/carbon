@@ -1,14 +1,13 @@
-import { App, Gtk, Gdk, writeFile, exec} from "astal"
+import { App } from "astal/gtk3"
 import Bar from "./widget/bar/Bar"
 import power from "./widget/power/power"
 import { ctrl } from "./widget/ctrl/ctrl"
 // import Desktop from "./widget/desktop/desktop"
 import { applyStyle } from "./utils"
-import { barSplit, darkMode } from "./vars"
+import { barSplit } from "./vars"
 
 applyStyle(
-	barSplit.get(),
-	darkMode.get())
+	barSplit.get())
 
 App.start({
     main() {

@@ -1,4 +1,5 @@
-import { App, Astal, Gtk, bind } from "astal"
+import {  bind } from "astal"
+import { App, Astal, Gtk } from "astal/gtk3"
 import { Date } from "./mods/timedate"
 import { Launcher } from "./mods/launcher"
 import { Workspaces } from "./mods/workspaces"

@@ -1,5 +1,4 @@
-import { bind } from "astal"
-import { barFloat, barSplit, darkMode } from "../../../vars"
+import { barFloat, barSplit } from "../../../vars"
 
 function toggleState(self: any, toggleable: any) {
 	if (toggleable.get() === false) {
@@ -29,6 +28,5 @@ export function toggles() {
 	return <box className={"toggles"} spacing={8}>
 		{toggleButton(barFloat, "Float Bar")}
 		{toggleButton(barSplit, "Split Bar")}
-		{toggleButton(darkMode, "Dark Mode")}
 	</box>
 }

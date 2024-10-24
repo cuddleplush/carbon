@@ -1,4 +1,3 @@
-import { execAsync } from "astal"
 import Hyprland from "gi://AstalHyprland";
 import { easyAsync } from "../../../utils";
 
