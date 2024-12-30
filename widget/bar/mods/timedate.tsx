@@ -1,5 +1,5 @@
 import { Variable, GLib } from "astal"
-import { bash } from "../../../utils"
+import { bash } from "../../../lib/utils"
 
 export function Date(): JSX.Element { 
     const time = Variable<string>("").poll(1000, () =>

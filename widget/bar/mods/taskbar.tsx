@@ -2,7 +2,6 @@ import Hyprland from "gi://AstalHyprland";
 
 import { bind } from "astal"
 import { Gdk } from "astal/gtk3"
-import { coordinateEquals } from "../../../../utils";
 
 const hyprland = Hyprland.get_default()
 

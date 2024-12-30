@@ -2,7 +2,7 @@ import GObject from "gi://GObject"
 
 import { Astal, Gtk, Gdk, App, astalify, type ConstructProps } from "astal/gtk3"
 import { exec } from "astal"
-import { bash, getDesktop } from "../../utils"
+import { bash } from "../../lib/utils"
 
 class Menu extends astalify(Gtk.Menu) {
     static { GObject.registerClass(this) }
@@ -79,7 +79,7 @@ function desktopMenu(): JSX.Element {
 	</Menu>
 }
 
-export default function desktop(gdkmonitor: Gdk.Monitor): JSX.Element {
+export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 	return <window
 		name={`desktop-${gdkmonitor}`}
 		anchor={Astal.WindowAnchor.TOP
@@ -105,9 +105,7 @@ export default function desktop(gdkmonitor: Gdk.Monitor): JSX.Element {
 				hexpand
 				vexpand
 				setup={(self: any) => {
-					self.label = getDesktop() === "hyprland"
-						? exec(`bash -c "hyprctl splash"`)
-						: "Not Hyprland!"
+					self.label = exec(`bash -c "hyprctl splash"`)
 				}}>
 			</label>
 		</eventbox>

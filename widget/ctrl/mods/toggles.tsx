@@ -1,6 +1,6 @@
 import { Variable, bind } from "astal"
 import { Gtk } from "astal/gtk3"
-import { dummyVar, barFloat, barSplit, nightLight } from "../../../vars"
+import { dummyVar, barFloat, barSplit, nightLight } from "../../../lib/vars"
 
 function toggleButton(toggleable: Variable<boolean>, label: string): JSX.Element {
 	return <button

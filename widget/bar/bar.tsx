@@ -8,10 +8,8 @@ import { Mute } from "./mods/mute"
 import { SysTray } from "./mods/tray"
 import { Taskbar } from "./mods/taskbar"
 import { Player } from "./mods/mpris"
-import { crypto } from "./mods/crypto"
 
-import { barFloat, barSplit } from "../../vars"
-import { getDesktop } from "../../utils"
+import { barFloat, barSplit } from "../../lib/vars"
 
 function leftModules(gdkmonitor: Gdk.Monitor): JSX.Element {
 	return <box
@@ -42,12 +40,12 @@ function rightModules(): JSX.Element {
 			: <box/>)}
 		<SysTray/>
 		<Mute/>
-		{getDesktop() === "hyprland" ? Lang() : null}
+		<Lang/>
 		<Date/>
 	</box>
 }
 
-export default function Bar(gdkmonitor: Gdk.Monitor): JSX.Element {
+export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 	return <window
 		className="Bar"
 		gdkmonitor={gdkmonitor}

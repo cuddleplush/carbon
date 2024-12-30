@@ -14,7 +14,7 @@ function ctrlBox(): JSX.Element {
 		</box>	
 }
 
-export function ctrl(gdkmonitor: Gdk.Monitor): JSX.Element {
+export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 	return <window
 		gdkmonitor={gdkmonitor}
 		visible={false}

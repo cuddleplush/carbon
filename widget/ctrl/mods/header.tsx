@@ -1,6 +1,6 @@
 import { Variable, exec } from "astal"
 import { Gtk, Gdk } from "astal/gtk3"
-import { bash } from "../../../utils"
+import { bash } from "../../../lib/utils"
 
 export function header(): JSX.Element {
 	const uptime = Variable("").poll(1000, ["bash", "-c", "uptime -p | tail -c +4"])

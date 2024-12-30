@@ -1,14 +1,14 @@
 import { App } from "astal/gtk3"
-import { barSplit } from "./vars"
-import Bar from "./widget/bar/Bar"
-import power from "./widget/power/power"
-import { ctrl } from "./widget/ctrl/ctrl"
-import desktop from "./widget/desktop/desktop"
-import NotificationPopups from "./widget/notifs/notifPopup"
-import { osd } from "./widget/osd/osd"
-import { cssStyler } from "./utils"
 
-cssStyler(barSplit.get())
+import Styler from "./lib/style"
+import Bar from "./widget/bar/bar"
+import Power from "./widget/power/power"
+import Control from "./widget/ctrl/ctrl"
+import Desktop from "./widget/desktop/desktop"
+import Notifications from "./widget/notifs/notifPopup"
+import OnScreenDisplay from "./widget/osd/osd"
+
+Styler()
 
 App.start({
 	instanceName: "carbon",
@@ -29,11 +29,11 @@ App.start({
     main() {
 		for (const gdkmonitor of App.get_monitors()) {
 			Bar(gdkmonitor)
-			ctrl(gdkmonitor)
-			desktop(gdkmonitor)
+			Control(gdkmonitor)
+			Desktop(gdkmonitor)
 		}
-		osd(),
-		power(),
-		NotificationPopups()
+		OnScreenDisplay(),
+		Power(),
+		Notifications()
 	}
 })

@@ -1,5 +1,6 @@
 import { Variable } from "astal"
-import { bash, cssStyler } from "./utils";
+import { bash } from "./utils"
+import Styler from "./style"
 
 export default {
     keyboardID: "hs6209-usb-dongle",
@@ -15,7 +16,7 @@ export const nightLight = Variable(false)
 export const hyprSplit = Variable(true)
 
 barSplit.subscribe((value: boolean) => {
-	cssStyler(value);
+	Styler(value);
 	value === true ? barFloat.set(true) : barFloat.set(false)
 })
 

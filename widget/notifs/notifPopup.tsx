@@ -55,7 +55,7 @@ class NotificationMap implements Subscribable {
     }
 }
 
-export default function NotificationPopups(): JSX.Element {
+export default function notificationPopups(): JSX.Element {
     const { BOTTOM, RIGHT } = Astal.WindowAnchor
     const notifs = new NotificationMap()
 

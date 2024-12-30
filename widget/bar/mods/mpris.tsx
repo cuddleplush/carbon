@@ -1,7 +1,7 @@
 import Mpris from "gi://AstalMpris"
 
 import { bind } from "astal"
-import vars from "../../../vars"
+import vars from "../../../lib/vars"
 
 export function Player(): JSX.Element {
 	const player =  Mpris.Player.new(vars.player)

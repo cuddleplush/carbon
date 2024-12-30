@@ -76,7 +76,7 @@ function OnScreenProgress(window: Astal.Window, vertical: boolean): Widget.Box {
 	});
 }
 
-export function osd(): JSX.Element {
+export default function(): JSX.Element {
 	return <window
 		visible={false}
 		className="OSD"

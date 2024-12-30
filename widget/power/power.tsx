@@ -1,6 +1,6 @@
 import { Gtk, Gdk, Astal, App } from "astal/gtk3"
 import { execAsync } from "astal"
-import { bash } from "../../utils"
+import { bash } from "../../lib/utils"
 
 function clicked(cmd: string, exec: string) {
 	App.toggle_window(`power`);
@@ -30,7 +30,7 @@ function powerBox(): JSX.Element {
 	</scrollable>
 }
 
-export default function power(): JSX.Element {
+export default function(): JSX.Element {
 	return <window
 		visible={false}
 		name={"power"}
