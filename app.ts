@@ -1,22 +1,39 @@
 import { App } from "astal/gtk3"
+import { barSplit } from "./vars"
 import Bar from "./widget/bar/Bar"
 import power from "./widget/power/power"
 import { ctrl } from "./widget/ctrl/ctrl"
-// import Desktop from "./widget/desktop/desktop"
-import { applyStyle } from "./utils"
-import { barSplit } from "./vars"
+import desktop from "./widget/desktop/desktop"
+import NotificationPopups from "./widget/notifs/notifPopup"
+import { osd } from "./widget/osd/osd"
+import { cssStyler } from "./utils"
 
-applyStyle(
-	barSplit.get())
+cssStyler(barSplit.get())
 
 App.start({
+	instanceName: "carbon",
+	requestHandler(request: string, res: (response: any) => void) {
+		switch (request) {
+			case "toggle ctrl":
+				App.toggle_window(`ctrl2460G4`);
+				break;
+			case "toggle power":
+				App.toggle_window(`power`);
+				break;
+			default:
+				res("unknown command")
+				break;
+		}
+	},
+
     main() {
-        Bar(0)
-        Bar(1)
-		ctrl(0)	
-		ctrl(1)	
-		power()
-		// Desktop(0)
-		// Desktop(1)
-    },
+		for (const gdkmonitor of App.get_monitors()) {
+			Bar(gdkmonitor)
+			ctrl(gdkmonitor)
+			desktop(gdkmonitor)
+		}
+		osd(),
+		power(),
+		NotificationPopups()
+	}
 })

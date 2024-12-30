@@ -1,5 +1,5 @@
-import {  bind } from "astal"
-import { App, Astal, Gtk } from "astal/gtk3"
+import { bind } from "astal"
+import { App, Astal, Gtk, Gdk } from "astal/gtk3"
 import { Date } from "./mods/timedate"
 import { Launcher } from "./mods/launcher"
 import { Workspaces } from "./mods/workspaces"
@@ -8,72 +8,60 @@ import { Mute } from "./mods/mute"
 import { SysTray } from "./mods/tray"
 import { Taskbar } from "./mods/taskbar"
 import { Player } from "./mods/mpris"
+import { crypto } from "./mods/crypto"
 
-import vars, { barFloat } from "../../vars"
+import { barFloat, barSplit } from "../../vars"
+import { getDesktop } from "../../utils"
 
-function Start(monitor: number) {
+function leftModules(gdkmonitor: Gdk.Monitor): JSX.Element {
 	return <box
 		spacing={8}
 		halign={Gtk.Align.START} >
-		<box className={"modules-1"} spacing={8}>
-			{Launcher(monitor)}
-			{Workspaces(monitor)}
-		</box>
-		<box className={"modules-2"} spacing={0}>
-			{Taskbar(monitor)}
-		</box>
-		{vars.playerPos === "start"
-			? <box className={"modules-3"}>
-				<Player />
-			</box> : <box />}
+			{Launcher(gdkmonitor)}
+			{Workspaces(gdkmonitor)}
+			{Taskbar(gdkmonitor)}
 	</box>
 }
 
-function Center() {
+function centerModules(): JSX.Element {
 	return <box 
 		spacing={8}
 		halign={Gtk.Align.CENTER} >
-		{vars.playerPos === "center"
-			? <box className={"modules-3"}>
-				<Player />
-			</box> : <box />}
+		{bind(barSplit).as((value) => value === true
+			? <Player/>
+			: <box/>)}
 	</box>
 }
 
-function End() {
+function rightModules(): JSX.Element {
 	return <box
 		spacing={8}
 		halign={Gtk.Align.END} >
-		{vars.playerPos === "end"
-			? <box className={"modules-3"}>
-				<Player />
-			</box> : <box />}
-		<box className={"modules-4"}>
-			<SysTray />
-		</box>
-			<Mute />
-		<box className={"modules-5"} spacing={8}>
-			<Lang />
-			<Date />
-		</box>
+		{bind(barSplit).as((value) => value === false
+			? <Player/>
+			: <box/>)}
+		<SysTray/>
+		<Mute/>
+		{getDesktop() === "hyprland" ? Lang() : null}
+		<Date/>
 	</box>
 }
 
-export default function Bar(monitor: number) {
+export default function Bar(gdkmonitor: Gdk.Monitor): JSX.Element {
 	return <window
 		className="Bar"
-		monitor={monitor}
-		margin={bind(barFloat).as((value) => value === true ? 8 : 0)}
-		margin_bottom={bind(barFloat).as((value) => value === true ? 0 : 0)}
+		gdkmonitor={gdkmonitor}
+		margin={bind(barFloat).as((value) => value ? 8 : 0)}
+		margin_bottom={bind(barFloat).as((value) => value ? 0 : 0)}
 		exclusivity={Astal.Exclusivity.EXCLUSIVE}
 		anchor={Astal.WindowAnchor.TOP
 			| Astal.WindowAnchor.LEFT
 			| Astal.WindowAnchor.RIGHT}
 		application={App}>
 		<centerbox>
-			{Start(monitor)}
-			{Center()}
-			{End()}
+			{leftModules(gdkmonitor)}
+			{centerModules()}
+			{rightModules()}
 		</centerbox>
 	</window>
 }

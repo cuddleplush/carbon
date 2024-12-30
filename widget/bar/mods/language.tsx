@@ -1,24 +1,22 @@
 import Hyprland from "gi://AstalHyprland";
-import { easyAsync } from "../../../utils";
-
-const hyprland = Hyprland.get_default();
 
 export function Lang(): JSX.Element { 
-	return <box>
+	const hyprland = Hyprland.get_default();
+	return <box className={"lang-box"}>
 		<label label={""} className={"icon lang"} />
 		<button		
-			onHover={(self) => self.toggleClassName("hover", true)}
-			onHoverLost={(self) => self.toggleClassName("hover", false)}
-
 			className={"module Lang"}
 			tooltipText={"Switch Input Language"}
-			onClick={() => easyAsync("gnome-calendar")} 
 			label={"EN"}
+			cursor="pointer"
 			setup={(self) => {
-				self.hook(hyprland, "keyboard-layout", (label: any, _kbName: any, layoutName) => {
-                    label.label = layoutName.includes("Russian") ? "RU" : "EN"
+				self.hook(hyprland, "keyboard-layout", (label, _kbName, layoutName) => {
+					label.label = layoutName.includes("Russian") ? "RU" 
+						: layoutName.includes("Eu") ? "EN"
+						: layoutName.includes("Czech") ? "CZ"
+						: 'NULL'
 				})
 			}} >
 		</button>
-		</box>
+	</box>
 }

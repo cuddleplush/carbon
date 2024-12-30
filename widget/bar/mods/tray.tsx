@@ -1,28 +1,23 @@
-import { bind } from "astal"
-import { App, Gdk } from "astal/gtk3"
 import Tray from "gi://AstalTray"
 
-export function SysTray() {
-    const tray = Tray.get_default()
+import { bind } from "astal"
 
-    return <box
-		className={"module"}
-		spacing={8}>
-        {bind(tray, "items").as(items => items.map(item => {
-            if (item.iconThemePath)
-                App.add_icons(item.iconThemePath)
+export function SysTray(): JSX.Element {
+	const tray = Tray.get_default()
 
-            const menu = item.create_menu()
-
-            return <button
-                tooltipMarkup={bind(item, "tooltipMarkup")}
-                onDestroy={() => menu?.destroy()}
-                onClickRelease={self => {
-                    menu?.popup_at_widget(self, Gdk.Gravity.SOUTH, Gdk.Gravity.NORTH, null)
-                }}>
-                <icon g_icon={bind(item, "gicon")}/>
-            </button>
-        }))}
-    </box>
+	return <box className={"tray-box"}>
+		<box className={"module"}
+			spacing={8}>
+			{bind(tray, "items").as(items => items.map(item => (
+				<menubutton
+					tooltipMarkup={bind(item, "tooltipMarkup")}
+					usePopover={false}
+					actionGroup={bind(item, "action-group").as(ag => ["dbusmenu", ag])}
+					menuModel={bind(item, "menu-model")}>
+					<icon gicon={bind(item, "gicon")} />
+				</menubutton>
+			)))}
+		</box>
+	</box>
 }
 

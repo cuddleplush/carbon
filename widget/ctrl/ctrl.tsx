@@ -3,7 +3,7 @@ import { header } from "./mods/header";
 import { sliders } from "./mods/sliders";
 import { toggles } from "./mods/toggles";
 
-function ctrlBox() {
+function ctrlBox(): JSX.Element {
 	return <box
 		className={"ctrl-box"}
 		vertical={true} >
@@ -14,11 +14,11 @@ function ctrlBox() {
 		</box>	
 }
 
-export function ctrl(monitor: number) {
+export function ctrl(gdkmonitor: Gdk.Monitor): JSX.Element {
 	return <window
-		monitor={monitor}
+		gdkmonitor={gdkmonitor}
 		visible={false}
-		name={`ctrl${monitor}`}
+		name={`ctrl${gdkmonitor.model}`}
 		anchor={Astal.WindowAnchor.TOP
 			| Astal.WindowAnchor.LEFT }
 		exclusivity={Astal.Exclusivity.NORMAL}
@@ -28,7 +28,7 @@ export function ctrl(monitor: number) {
 		application={App}
 		onKeyPressEvent={(_, event) => {
 			if (event.get_keyval()[1] === Gdk.KEY_Escape) {
-				App.toggle_window(`ctrl${monitor}`);
+				App.toggle_window(`ctrl${gdkmonitor.model}`);
 			}
 		}} >
 		{ctrlBox()}

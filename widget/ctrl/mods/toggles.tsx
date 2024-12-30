@@ -1,32 +1,35 @@
-import { barFloat, barSplit } from "../../../vars"
+import { Variable, bind } from "astal"
+import { Gtk } from "astal/gtk3"
+import { dummyVar, barFloat, barSplit, nightLight } from "../../../vars"
 
-function toggleState(self: any, toggleable: any) {
-	if (toggleable.get() === false) {
-		toggleable.set(true)
-		self.toggleClassName("active", true)
-	} else {
-		toggleable.set(false)
-		self.toggleClassName("active", false)
-	}
-}
-
-function toggleButton(toggleable: any, label: string) {
+function toggleButton(toggleable: Variable<boolean>, label: string): JSX.Element {
 	return <button
 		setup={(self: any) => {
-			toggleable.get() === true
-				? self.toggleClassName("active", true)
-				: self.toggleClassName("active", false)
+			self.toggleClassName("active", toggleable.get())
 		}}
-		hexpand
-		className={"togglebtn"}
-		label={label}
-		onClicked={(self) => toggleState(self, toggleable)}>
+		hexpand={true}
+		className={bind(toggleable).as((value) => 
+			value === true ? "togglebtn active" : "togglebtn")}
+		onClicked={() => toggleable.set(!toggleable.get())}>
+		<box vertical valign={Gtk.Align.CENTER}>
+			<label label={label} halign={Gtk.Align.START}/>
+			<label
+				label={bind(toggleable).as((value) => 
+					value === true ? "Enabled" : "Disabled")}
+				halign={Gtk.Align.START}/>
+		</box>
 	</button>
 }
 
-export function toggles() {
-	return <box className={"toggles"} spacing={8}>
-		{toggleButton(barFloat, "Float Bar")}
-		{toggleButton(barSplit, "Split Bar")}
+export function toggles(): JSX.Element {
+	return <box className={"toggles"} spacing={8} vertical>
+		<box spacing={8}>
+			{toggleButton(barFloat, "Floating Bar")}
+			{toggleButton(barSplit, "Split Bar")}
+		</box>
+		<box spacing={8}>
+			{toggleButton(dummyVar, "Goblin Mode")}
+			{toggleButton(nightLight, "Night Light")}
+		</box>
 	</box>
 }

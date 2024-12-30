@@ -1,26 +1,28 @@
 import { Variable, exec } from "astal"
-import { Gtk } from "astal/gtk3"
-import { easyAsync } from "../../../utils"
+import { Gtk, Gdk } from "astal/gtk3"
+import { bash } from "../../../utils"
 
-export function header() {
+export function header(): JSX.Element {
 	const uptime = Variable("").poll(1000, ["bash", "-c", "uptime -p | tail -c +4"])
-	const kver = exec(`bash -c "uname -r | cut -d "-" -f1"`)
 	const who = exec(`bash -c "whoami"`) + " • " + exec(`bash -c "hostname"`)
 
 	return <box
 		spacing={8} >
 		<box
 			className={"ctrl-header"} >
-			<icon
-				className={"pic"}
-				icon={`${SRC}/assets/pfp.jpg`}
-				iconSize={400} >
-			</icon>
+			<button
+				label={'(\\ /)\n( . .)\nc(")(")'}
+				css={"min-height: 70px; padding-left: 6px;"}
+				onHover={(self) => self.label = '(\\ /)\n( ^ ^)\nc(")(")'}
+				onHoverLost={(self) => self.label = '(\\ /)\n( . .)\nc(")(")'}>
+			</button>
+
 			<box
 				vertical={true}
+				css={"padding-left: 10px;"}
 				valign={Gtk.Align.CENTER} >
-				<label label={who + " • " + kver} />
-				<label label={uptime()} />
+				<label label={who} halign={Gtk.Align.START} />
+				<label label={uptime()} halign={Gtk.Align.START} css={"color: #999999; padding-right: 8px;"} />
 			</box>
 		</box>
 
@@ -28,13 +30,20 @@ export function header() {
 			spacing={8}
 			vertical={true} >
 			<button
-				label={""}
-				className={"wp-btn"}
-				onClicked={() => easyAsync("rofi-wall.sh")} />
-			<button
 				label={"󰒓"}
 				className={"wp-btn"}
-				onClicked={() => easyAsync("foot -e nvim ~/.config/ags/astal")} />
+				onClicked={() => bash("foot -e nvim ~/.config/astal/carbon")} />
+			<button
+				label={""}
+				className={"wp-btn"}
+				onButtonPressEvent={(_, event) => {
+					if (event.get_button()[1] === Gdk.BUTTON_PRIMARY) {
+						bash("rofi-wall.sh")
+					} else {
+						bash("wpmgr next")
+					}
+				}}>
+			</button>
 		</box>
 	</box>
 }

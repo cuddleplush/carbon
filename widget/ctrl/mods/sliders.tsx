@@ -1,7 +1,7 @@
 import { bind } from "astal"
 import Wp from "gi://AstalWp"
 
-export function sliders(type: string) {
+export function sliders(type: string): JSX.Element {
 	const device = type === "speaker"
 		? Wp.get_default()?.audio.defaultSpeaker!
 		: Wp.get_default()?.audio.defaultMicrophone!
@@ -14,6 +14,7 @@ export function sliders(type: string) {
 		<slider
 			hexpand={true}
 			drawValue={false}
+			cursor={"pointer"}
 			onDragged={({ value }) => device.volume = value}
 			value={bind(device, "volume")} >
 		</slider>

@@ -10,43 +10,6 @@ window.Bar {
   }
 }
 
-@if $bar-split {
-  .modules-1,
-  .modules-2,
-  .modules-3,
-  .modules-4,
-  .modules-5 {
-    background-color: $bg;
-  }
-
-  .modules-1 {
-    margin: 0 0 0 -8px;
-    padding: 0 8px 0 8px;
-  }
-  .modules-2 {
-    padding: 0 8px 0 8px;
-  }
-  .modules-3 {
-    padding: 0 8px 0 8px;
-    background-color: transparent;
-  }
-  .modules-4 {
-    padding: 0 8px 0 8px;
-  }
-  .modules-5 {
-    padding: 0 8px 0 8px;
-    margin-right: -8px;
-  }
-  .mprisbox {
-    background-color: $bg;
-    padding: 0 8px 0 8px;
-    margin: 0 -8px 0 -8px;
-  }
-  .micbox {
-    background-color: $bg;
-    padding: 0 8px 0 8px;
-  }
-}
 
 .icon {
   min-height: 29px;
@@ -72,7 +35,18 @@ window.Bar {
     }
   }
 
-  &:hover {
+  &.focused {
+    background-color: $fg;
+    label {
+      font-weight: bold;
+      color: $bg;
+    }
+    &:hover {
+      background-color: $fg;
+    }
+  }
+
+  &:not(.focused):hover {
     background-color: $bg4;
     label {
       font-weight: bold;
@@ -100,13 +74,21 @@ window.Bar {
   }
 }
 
+.ws-tasks {
+  margin-right: 8px;
+  &.empty {
+    margin: 0 0;
+  }
+}
+
 .ws-button {
   min-width: 60px;
   margin: 8px 0px;
 
   label {
-    transition: background-color 300ms cubic-bezier(0, 0, 0.2, 1);
-    padding-top: 1px;
+    @if $hyprland {
+      transition: background-color 300ms cubic-bezier(0, 0, 0.2, 1);
+    }
   }
 
   &.occupied {
@@ -121,6 +103,14 @@ window.Bar {
     }
   }
 
+  &.focused {
+    label {
+      background-color: $fg;
+      color: $bg;
+      font-weight: bold;
+    }
+  }
+
   &.active {
     label {
       background-color: $fg;
@@ -129,7 +119,16 @@ window.Bar {
     }
   }
 
-  &:not(.active):hover {
+  &.urgent {
+    label {
+      background-color: $blue;
+      color: $bg;
+      font-weight: bold;
+    }
+  }
+
+
+  &:not(.focused):hover {
     label {
       background-color: $bg4;
       font-weight: bold;
@@ -145,24 +144,41 @@ window.Bar {
 .togglebtn {
   transition: background-color 300ms cubic-bezier(0, 0, 0.2, 1);
   background-color: $bg2;
-  min-width: 60px;
+  min-width: 130px;
   min-height: 30px;
+  box {
+      padding: 8px;
+  }
+  box > label:nth-child(2) {
+    color: #999999;
+  }
   label {
     transition: background-color 300ms cubic-bezier(0, 0, 0.2, 1);
+    color: $fg;
   }
-
+  &.statelabel {
+    color: #999999;
+    background-color: inherit;
+  }
   &:not(.active):hover {
-    label {
       background-color: $bg4;
+    box > label:nth-child(2) {
+      font-weight: normal;
+    }
+    label {
       font-weight: bold;
       color: $fg;
     }
   }
 
   &.active {
-    color: $bg;
     background-color: $fg;
+    box > label:nth-child(2) {
+      color: $bg;
+      font-weight: normal;
+    }
     label {
+      color: $bg;
       font-weight: bold;
     }
     &:hover {
@@ -172,9 +188,42 @@ window.Bar {
       }
     }
   }
-
 }
 
-tooltip {
-  background-color: $bg;
+@if $bar-split {
+  .launcher-box,
+  .ws-box,
+  .window-box,
+  .taskbar-box,
+  .mpris-box,
+  .tray-box,
+  .mute-box,
+  .lang-box,
+  .time-box {
+    background-color: $bg;
+    padding: 0 8px;
+  }
+
+  .launcher-box {
+    padding: 0 0 0 8px;
+    margin-right: -8px;
+    margin-left: -8px;
+  }
+
+  .ws-box {
+    padding: 0 8px;
+  }
+
+  .time-box {
+    margin: 0 -8px;
+  }
+
+  .lang-box {
+    margin: 0 -8px 0 0;
+  }
+
+  .mute-box {
+    margin-right: 8px;
+  }
+
 }
