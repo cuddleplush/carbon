@@ -1,5 +1,6 @@
 import { execAsync } from "astal"
 
+// Ugly helper to run things from bash
 export function bash(cmd: string): void {
 execAsync(["bash", "-c", `${cmd} &`])
     .then((out) => console.log(out))

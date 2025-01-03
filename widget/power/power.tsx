@@ -42,7 +42,10 @@ export default function(): JSX.Element {
 		application={App}
 		onKeyPressEvent={(_, event) => {
 			if (event.get_keyval()[1] === Gdk.KEY_Escape) {
-				App.toggle_window(`power`);
+				App.get_window("control")!.hide()
+				App.get_window("power")!.hide()
+				App.get_window("launcher")!.hide()
+				App.get_window("closebox")!.hide()
 			}
 		}} >
 		{powerBox()}

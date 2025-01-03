@@ -2,7 +2,7 @@ import Wp from "gi://AstalWp"
 
 import { bind } from "astal"
 
-export function Mute(): JSX.Element { 
+export default function(): JSX.Element { 
 	const mic = Wp.get_default()?.audio.defaultMicrophone!
 	return <box className={"mute-box"}
 		visible={bind(mic, "mute").as(Boolean)}>

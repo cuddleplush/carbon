@@ -46,7 +46,7 @@ function Task(client: Hyprland.Client): JSX.Element {
 	</button>
 }
 
-export function Taskbar(gdkmonitor: Gdk.Monitor): JSX.Element {
+export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 	return <box className={"taskbar-box"}>
 		<button
 			className={"module empty"} 

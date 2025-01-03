@@ -1,7 +1,7 @@
 import { Variable, GLib } from "astal"
 import { bash } from "../../../lib/utils"
 
-export function Date(): JSX.Element { 
+export default function(): JSX.Element { 
     const time = Variable<string>("").poll(1000, () =>
         GLib.DateTime.new_now_local().format("%H:%M")!)
 

@@ -3,7 +3,7 @@ import Mpris from "gi://AstalMpris"
 import { bind } from "astal"
 import vars from "../../../lib/vars"
 
-export function Player(): JSX.Element {
+export default function(): JSX.Element {
 	const player =  Mpris.Player.new(vars.player)
 
 	if (bind(player, "available")) {

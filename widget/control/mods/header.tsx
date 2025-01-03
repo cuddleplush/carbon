@@ -9,7 +9,7 @@ export function header(): JSX.Element {
 	return <box
 		spacing={8} >
 		<box
-			className={"ctrl-header"} >
+			className={"control-header"} >
 			<button
 				label={'(\\ /)\n( . .)\nc(")(")'}
 				css={"min-height: 70px; padding-left: 6px;"}

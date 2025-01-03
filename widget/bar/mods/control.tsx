@@ -1,13 +1,13 @@
-import { App, Gdk } from "astal/gtk3"
+import { bash } from "../../../lib/utils"
 
-export function Launcher(gdkmonitor: Gdk.Monitor): JSX.Element { 
+export default function(): JSX.Element { 
 	return <box className={"launcher-box"}>
 		<button
 			label={"󰣨"}
 			className={"module ctrl"}
 			tooltipText={"Control Panel"}
 			cursor="pointer"
-			onClick={() => App.toggle_window(`ctrl${gdkmonitor.model}`)} >
+			onClick={() => bash('ags --instance carbon request "toggle control"')}>
 		</button>
 	</box>
 }

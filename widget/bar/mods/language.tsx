@@ -1,20 +1,18 @@
 import Hyprland from "gi://AstalHyprland";
 
-export function Lang(): JSX.Element { 
+export default function(): JSX.Element { 
 	const hyprland = Hyprland.get_default();
 	return <box className={"lang-box"}>
 		<label label={""} className={"icon lang"} />
 		<button		
-			className={"module Lang"}
+			className={"module lang"}
 			tooltipText={"Switch Input Language"}
-			label={"EN"}
+			// There isn't a way to query the layout at startup TwT
+			label={"EU"}
 			cursor="pointer"
 			setup={(self) => {
-				self.hook(hyprland, "keyboard-layout", (label, _kbName, layoutName) => {
-					label.label = layoutName.includes("Russian") ? "RU" 
-						: layoutName.includes("Eu") ? "EN"
-						: layoutName.includes("Czech") ? "CZ"
-						: 'NULL'
+				self.hook(hyprland, "keyboard-layout", (label, _, layoutName) => {
+					label.label = layoutName.substring(0,2).toUpperCase();
 				})
 			}} >
 		</button>

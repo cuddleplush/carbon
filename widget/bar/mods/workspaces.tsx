@@ -17,7 +17,7 @@ function ws(id: number): Variable<Hyprland.Workspace> {
         .observe(hyprland, "workspace-removed", get);
 }
 
-export function Workspaces(gdkmonitor: Gdk.Monitor): JSX.Element {
+export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
     const hyprland = Hyprland.get_default()
 	
 	let monitorID: number = 0;

@@ -1,36 +1,39 @@
 import { App, Gdk, Astal } from "astal/gtk3"
+
 import { header } from "./mods/header";
 import { sliders } from "./mods/sliders";
 import { toggles } from "./mods/toggles";
 
-function ctrlBox(): JSX.Element {
+function controlBox(): JSX.Element {
 	return <box
-		className={"ctrl-box"}
+		className={"control-box"}
 		vertical={true} >
-			{header()}
-			{sliders("speaker")}
-			{sliders("microphone")}
-			{toggles()}
-		</box>	
+		{header()}
+		{sliders("speaker")}
+		{sliders("microphone")}
+		{toggles()}
+	</box>	
 }
 
-export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
+export default function(): JSX.Element {
 	return <window
-		gdkmonitor={gdkmonitor}
 		visible={false}
-		name={`ctrl${gdkmonitor.model}`}
+		name={`control`}
 		anchor={Astal.WindowAnchor.TOP
 			| Astal.WindowAnchor.LEFT }
 		exclusivity={Astal.Exclusivity.NORMAL}
 		keymode={Astal.Keymode.ON_DEMAND}
-		layer={Astal.Layer.TOP}
+		layer={Astal.Layer.OVERLAY}
 		margin={10}
 		application={App}
 		onKeyPressEvent={(_, event) => {
 			if (event.get_keyval()[1] === Gdk.KEY_Escape) {
-				App.toggle_window(`ctrl${gdkmonitor.model}`);
+				App.get_window("control")!.hide()
+				App.get_window("power")!.hide()
+				App.get_window("launcher")!.hide()
+				App.get_window("closebox")!.hide()
 			}
 		}} >
-		{ctrlBox()}
+		{controlBox()}
 	</window>
 }
