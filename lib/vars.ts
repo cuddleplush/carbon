@@ -16,7 +16,7 @@ export const barFloat = Variable(false)
 export const barSplit = Variable(false)
 export const nightLight = Variable(false)
 
-export const debug = Variable(true)
+export const debug = Variable(false)
 
 // We listen for changes in these variables and perfrom
 // the changes in our shell
