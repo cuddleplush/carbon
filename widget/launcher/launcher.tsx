@@ -1,18 +1,26 @@
 import Apps from "gi://AstalApps"
 import { App, Astal, Gdk, Gtk } from "astal/gtk3"
 import { Variable } from "astal"
-import { bash } from "../../lib/utils"
 
-// const MAX_ITEMS = 32
+import Hyprland from "gi://AstalHyprland";
 
-function hide() {
-	App.get_window("launcher")!.hide()
-}
+const hyprExec = (arg: string): void => {
+    const hyprland = Hyprland.get_default();
+	hyprland.message(`dispatch exec ${arg}`)
+};
+
+const MAX_ITEMS = 32
 
 function AppButton({ app }: { app: Apps.Application }) {
 	return <button
 		className="app-button"
-		onClicked={() => { hide(); bash(app.get_executable()) }}>
+		onClicked={() => {
+			hyprExec(app.get_executable().split("%")[0])
+			App.get_window("control")!.hide()
+			App.get_window("power")!.hide()
+			App.get_window("launcher")!.hide()
+			App.get_window("closebox")!.hide()
+		}}>
 		<box>
 			<icon icon={app.iconName} className={"app-icon-launcher"} />
 			<box valign={Gtk.Align.CENTER} vertical>
@@ -32,10 +40,13 @@ export default function() {
 	const apps = new Apps.Apps()
 
 	const text = Variable("")
-	const list = text(text => apps.fuzzy_query(text))
+	const list = text(text => apps.fuzzy_query(text).slice(0, MAX_ITEMS))
 	const onEnter = () => {
-		bash(apps.fuzzy_query(text.get())?.[0].get_executable())
-		hide()
+		hyprExec(apps.fuzzy_query(text.get())?.[0].get_executable().split("%")[0])
+		App.get_window("launcher")!.hide()
+		App.get_window("control")!.hide()
+		App.get_window("power")!.hide()
+		App.get_window("closebox")!.hide()
 	}
 
 	return <window

@@ -21,7 +21,7 @@ function closeBox(): JSX.Element {
 	</eventbox>
 }
 
-export default function (): JSX.Element {
+export default function(): JSX.Element {
 	return <window
 		visible={false}
 		name={`closebox`}
@@ -32,6 +32,7 @@ export default function (): JSX.Element {
 			| Astal.WindowAnchor.RIGHT}
 		exclusivity={Astal.Exclusivity.IGNORE}
 		keymode={Astal.Keymode.NONE}
+		margin_top={45}
 		layer={Astal.Layer.TOP}
 		application={App}
 		onKeyPressEvent={(_, event) => {

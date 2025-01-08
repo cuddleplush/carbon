@@ -19,7 +19,7 @@ function ws(id: number): Variable<Hyprland.Workspace> {
 
 export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
     const hyprland = Hyprland.get_default()
-	
+
 	let monitorID: number = 0;
 	for (let hyprMonitor of hyprland.monitors) {
 		if (hyprMonitor.model === gdkmonitor.model) {
@@ -28,17 +28,15 @@ export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 	}
 
     function workspaceButton(id: number): Binding<JSX.Element> {
-        return (bind(ws(id)).as(ws => {
+        return (bind(ws(id)).as(workspace => {
 			const icons = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
 			const iconIndex = id % 10 - 1;
 
             const className = Variable.derive([
-                bind(hyprland, "focusedWorkspace"),
-                bind(ws, "clients"),
+                bind(workspace, "clients"),
 				bind(hyprland.monitors[monitorID === 0 ? 1 : 0], "activeWorkspace")
-            ], (focused, clients, active) => {
-				return focused === ws ? "ws-button focused"
-					: active === ws ? "ws-button active"
+            ], (clients, active) => {
+				return active === workspace ? "ws-button active"
                 	: clients.length > 0 ? "ws-button occupied"
 					: "ws-button"}
 			)
@@ -51,7 +49,8 @@ export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 		}))
 	}
 
-    return <box spacing={8}>{(Array.from({ length: 5 }, (_, idx) => {
+    return <box spacing={8}>
+		{(Array.from({ length: 5 }, (_, idx) => {
 		const id = idx + (monitorID * 10 + 1);
 		return workspaceButton(id)
 	}))}

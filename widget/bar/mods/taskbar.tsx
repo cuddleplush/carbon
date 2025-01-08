@@ -52,17 +52,13 @@ export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 			className={"module empty"} 
 			label={"Desktop"}
 			setup={(self: any) => {
-				const empty = () => hyprland.clients.filter((c) => c.monitor.model === gdkmonitor.model).length === 0
+				function empty() {
+					self.visible = hyprland.clients.filter((c) => c.monitor.model === gdkmonitor.model).length === 0
+						? true : false
+				}
 				self.visible = empty()
-				self.hook(hyprland, "event", (self: any, event?: string) => {
-					switch (event) {
-						case "movewindowv2":
-						case "openwindow":
-						case "closewindow":
-							self.visible = empty()
-							break;
-					}
-				})
+				self.hook(hyprland, "notify::clients", empty)
+				self.hook(hyprland, "client-moved", empty)
 			}}>
 		</button>
 		{bind(hyprland, "workspaces").as((workspaces) => {

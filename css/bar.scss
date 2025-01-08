@@ -126,7 +126,7 @@ window.Bar {
   }
 
 
-  &:not(.focused):hover {
+  &:not(.active):hover {
     label {
       background-color: $bg4;
       font-weight: bold;

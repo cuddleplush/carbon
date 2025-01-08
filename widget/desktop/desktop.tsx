@@ -1,30 +1,9 @@
-import GObject from "gi://GObject"
+import { Astal, Gtk, Gdk, App } from "astal/gtk3"
 
-import { Astal, Gtk, Gdk, App, astalify, type ConstructProps } from "astal/gtk3"
+import { Menu, MenuItem } from "../../lib/shared"
+
 import { exec } from "astal"
 import { bash } from "../../lib/utils"
-
-class Menu extends astalify(Gtk.Menu) {
-    static { GObject.registerClass(this) }
-
-    constructor(props: ConstructProps<
-        Menu,
-        Gtk.Menu.ConstructorProps
-    >) {
-        super(props as any)
-    }
-}
-
-class MenuItem extends astalify(Gtk.MenuItem) {
-    static { GObject.registerClass(this) }
-
-    constructor(props: ConstructProps<
-        MenuItem,
-        Gtk.MenuItem.ConstructorProps
-    >) {
-        super(props as any)
-    }
-}
 
 function item(label: string, app: string): JSX.Element {
 	return <MenuItem className={"menu-item"} label={label} 
@@ -40,6 +19,7 @@ function desktopMenu(): JSX.Element {
 	return <Menu className={"desktop-menu"} >
 		{item("Audio", "pavucontrol")}
 		{item("Music", "/opt/Cider/cider --ozone-platform-hint=wayland")}
+		{item("Files", "nemo")}
 		{item("Browser", "firefox")}
 		{item("Screenshot", "grimblast --notify copysave area")}
 		<MenuItem className={"menu-sep"} child={<Gtk.Separator visible/>}/>
@@ -95,7 +75,7 @@ export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 			className={"desktop"}
 			onButtonPressEvent={(_, event) => {
 				if (event.get_button()[1] === Gdk.BUTTON_SECONDARY) {
-					desktopMenu().popup_at_pointer(event)
+					(desktopMenu() as Menu).popup_at_pointer(event)
 				}
 			}}>
 			<label
