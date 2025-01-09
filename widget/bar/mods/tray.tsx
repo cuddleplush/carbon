@@ -6,18 +6,18 @@ import { Gdk, Gtk } from "astal/gtk3";
 
 const systemtray = AstalTray.get_default();
 
-const createMenu = (menuModel: Gio.MenuModel, actionGroup: Gio.ActionGroup | null): Gtk.Menu => {
+function createMenu(menuModel: Gio.MenuModel, actionGroup: Gio.ActionGroup | null): Gtk.Menu {
 	const menu = Gtk.Menu.new_from_model(menuModel);
 	menu.insert_action_group("dbusmenu", actionGroup);
 
 	return menu;
 };
 
-const MenuDefaultIcon = ({ item }: MenuEntryProps): JSX.Element => {
+function MenuDefaultIcon({ item }: MenuEntryProps): JSX.Element {
 	return <icon gicon={bind(item, "gicon")} tooltipMarkup={bind(item, "tooltipMarkup")} />;
 };
 
-const MenuEntry = ({ item, child }: MenuEntryProps): JSX.Element => {
+function MenuEntry({ item, child }: MenuEntryProps): JSX.Element {
 	let menu: Gtk.Menu;
 
 	const entryBinding = Variable.derive(

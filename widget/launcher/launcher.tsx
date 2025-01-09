@@ -4,7 +4,7 @@ import { Variable } from "astal"
 
 import Hyprland from "gi://AstalHyprland";
 
-const hyprExec = (arg: string): void => {
+function hyprExec(arg: string): void {
     const hyprland = Hyprland.get_default();
 	hyprland.message(`dispatch exec ${arg}`)
 };
