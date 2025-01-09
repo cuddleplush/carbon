@@ -61,7 +61,7 @@ function desktopMenu(): JSX.Element {
 
 export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 	return <window
-		name={`desktop-${gdkmonitor.model}`}
+		name={`desktop`}
 		anchor={Astal.WindowAnchor.TOP
 		| Astal.WindowAnchor.BOTTOM
 		| Astal.WindowAnchor.LEFT

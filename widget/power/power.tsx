@@ -1,6 +1,6 @@
 import { Gtk, Gdk, Astal, App } from "astal/gtk3"
 import { execAsync } from "astal"
-import { bash } from "../../lib/utils"
+import { bash, hideWindows } from "../../lib/utils"
 
 function clicked(cmd: string, exec: string) {
 	App.toggle_window(`power`);
@@ -42,10 +42,7 @@ export default function(): JSX.Element {
 		application={App}
 		onKeyPressEvent={(_, event) => {
 			if (event.get_keyval()[1] === Gdk.KEY_Escape) {
-				App.get_window("control")!.hide()
-				App.get_window("power")!.hide()
-				App.get_window("launcher")!.hide()
-				App.get_window("closebox")!.hide()
+				hideWindows()
 			}
 		}} >
 		{powerBox()}

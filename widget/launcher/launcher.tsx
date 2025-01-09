@@ -3,6 +3,7 @@ import { App, Astal, Gdk, Gtk } from "astal/gtk3"
 import { Variable } from "astal"
 
 import Hyprland from "gi://AstalHyprland";
+import { hideWindows } from "../../lib/utils";
 
 function hyprExec(arg: string): void {
     const hyprland = Hyprland.get_default();
@@ -16,10 +17,7 @@ function AppButton({ app }: { app: Apps.Application }) {
 		className="app-button"
 		onClicked={() => {
 			hyprExec(app.get_executable().split("%")[0])
-			App.get_window("control")!.hide()
-			App.get_window("power")!.hide()
-			App.get_window("launcher")!.hide()
-			App.get_window("closebox")!.hide()
+			hideWindows()
 		}}>
 		<box>
 			<icon icon={app.iconName} className={"app-icon-launcher"} />
@@ -43,10 +41,7 @@ export default function() {
 	const list = text(text => apps.fuzzy_query(text).slice(0, MAX_ITEMS))
 	const onEnter = () => {
 		hyprExec(apps.fuzzy_query(text.get())?.[0].get_executable().split("%")[0])
-		App.get_window("launcher")!.hide()
-		App.get_window("control")!.hide()
-		App.get_window("power")!.hide()
-		App.get_window("closebox")!.hide()
+		hideWindows()
 	}
 
 	return <window
@@ -61,10 +56,7 @@ export default function() {
 		onShow={() => text.set("")}
 		onKeyPressEvent={(_, event) => {
 			if (event.get_keyval()[1] === Gdk.KEY_Escape) {
-				App.get_window("control")!.hide()
-				App.get_window("power")!.hide()
-				App.get_window("launcher")!.hide()
-				App.get_window("closebox")!.hide()
+				hideWindows()
 			}
 		}} >
 		<box hexpand={false} vexpand vertical>

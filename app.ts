@@ -19,6 +19,7 @@ App.start({
 	instanceName: "carbon",
 
 	requestHandler(request: string, res: (response: any) => void) {
+		// TODO: de-uglify
 		function haveCloseBox() { 
 			if (!App.get_window("closebox")?.is_visible()) {
 				App.toggle_window(`closebox`);

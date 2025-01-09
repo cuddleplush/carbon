@@ -3,6 +3,7 @@ import { App, Gdk, Astal } from "astal/gtk3"
 import { header } from "./mods/header";
 import { sliders } from "./mods/sliders";
 import { toggles } from "./mods/toggles";
+import { hideWindows } from "../../lib/utils";
 
 function controlBox(): JSX.Element {
 	return <box
@@ -28,10 +29,7 @@ export default function(): JSX.Element {
 		application={App}
 		onKeyPressEvent={(_, event) => {
 			if (event.get_keyval()[1] === Gdk.KEY_Escape) {
-				App.get_window("control")!.hide()
-				App.get_window("power")!.hide()
-				App.get_window("launcher")!.hide()
-				App.get_window("closebox")!.hide()
+				hideWindows()
 			}
 		}} >
 		{controlBox()}

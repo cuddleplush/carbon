@@ -50,7 +50,7 @@ function rightModules(): JSX.Element {
 
 export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 	return <window
-		name={"Bar"}
+		name={"bar"}
 		className="Bar"
 		gdkmonitor={gdkmonitor}
 		// Dynamically change the margins if bar is floating
