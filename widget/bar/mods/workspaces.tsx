@@ -3,7 +3,7 @@ import Hyprland from "gi://AstalHyprland";
 import { bind, Variable, Binding } from "astal";
 import { Gdk } from "astal/gtk3"
 
-const dispatch = (arg: number): void => {
+function dispatch(arg: number): void {
     const hyprland = Hyprland.get_default();
 	hyprland.message(`dispatch workspace ${arg}`)
 };
@@ -34,9 +34,9 @@ export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 
             const className = Variable.derive([
                 bind(workspace, "clients"),
-				bind(hyprland.monitors[monitorID === 0 ? 1 : 0], "activeWorkspace")
-            ], (clients, active) => {
-				return active === workspace ? "ws-button active"
+				bind(hyprland, "focusedWorkspace")
+            ], (clients, _) => {
+				return hyprland.get_monitor(monitorID).active_workspace === workspace ? "ws-button active"
                 	: clients.length > 0 ? "ws-button occupied"
 					: "ws-button"}
 			)
@@ -49,10 +49,10 @@ export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 		}))
 	}
 
-    return <box spacing={8}>
-		{(Array.from({ length: 5 }, (_, idx) => {
-		const id = idx + (monitorID * 10 + 1);
-		return workspaceButton(id)
-	}))}
+	return <box spacing={8}>
+		{Array.from({ length: 5 }, (_, idx) => {
+			const id = idx + (monitorID * 10 + 1);
+			return workspaceButton(id)
+		})}
 	</box>
 }
