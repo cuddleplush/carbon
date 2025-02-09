@@ -1,6 +1,6 @@
 import { Variable } from "astal"
-import { bash } from "./utils"
-import Styler from "./style"
+
+import { Bash } from "."
 
 // Settings
 export default {
@@ -21,7 +21,6 @@ export const debug = Variable(false)
 // We listen for changes in these variables and perfrom
 // the changes in our shell
 barSplit.subscribe((value: boolean) => {
-	Styler(value);
 	// If the bar is split, it should also be floating
 	value === true ? barFloat.set(true) : barFloat.set(false)
 })
@@ -32,10 +31,6 @@ barFloat.subscribe((value: boolean) => {
 })
 
 nightLight.subscribe((value: boolean) => {
-	value === true ? bash("hyprshade on blue-light-filter")
-				   : bash("hyprshade off")
-})
-
-debug.subscribe((value: boolean) => {
-	Styler(undefined, value)
+	value === true ? Bash("hyprshade on blue-light-filter")
+				   : Bash("hyprshade off")
 })

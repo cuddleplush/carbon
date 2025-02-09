@@ -1,17 +1,21 @@
-import { App } from "astal/gtk3"
+import { App } from "astal/gtk4"
 
-import Styler from "./lib/style"
-import Bar from "./widget/bar/bar"
-import Power from "./widget/power/power"
-import Control from "./widget/control/control"
-import Desktop from "./widget/desktop/desktop"
-import Notifications from "./widget/notifs/notifPopup"
-import OnScreenDisplay from "./widget/osd/osd"
-import Launcher from "./widget/launcher/launcher"
-import CloseBox from "./widget/closebox/closebox"
+import { Style } from "./lib"
+
+import Notifications from "./widget/notifs/NotificationPopup"
+import NotificationCenter from "./widget/notifs/NotificationCenter"
+// import Desktop from "./widget/desktop/desktop"
+import Bar 					from "./widget/bar/Bar"
+import Power 				from "./widget/power/Power"
+import Control 				from "./widget/control/Control"
+import OnScreenDisplay 		from "./widget/osd/OSD"
+// import Notifications 		from "./widget/notifsv2/NotificationPopup"
+// import NotificationCenter 	from "./widget/notifsv2/NotificationCenter"
+import Launcher 			from "./widget/launcher/Launcher"
+import CloseBox 			from "./widget/closebox/Closebox"
 
 // Apply our scss using the sassc transpiler
-Styler()
+Style();
 
 // Start the shell
 App.start({
@@ -27,28 +31,36 @@ App.start({
 				!App.get_window("control")?.is_visible()
 				&& !App.get_window("power")?.is_visible()
 				&& !App.get_window("launcher")?.is_visible()
+				&& !App.get_window("notification-center")?.is_visible()
 			) {
 				App.get_window("closebox")!.hide();
 			}
 		}
 		switch (request) {
-			case "toggle control":
+			case "ControlPanel":
 				App.toggle_window(`control`);
 				haveCloseBox();
-				res("toggled control");
+				res("Toggled Control Panel");
 				break;
-			case "toggle power":
+			case "PowerMenu":
 				App.toggle_window(`power`);
 				haveCloseBox();
-				res("toggled power");
+				res("Toggled Power Menu");
 				break;
-			case "toggle launcher":
+			case "Launcher":
 				App.toggle_window(`launcher`);
+				App.get_window("notification-center")?.hide()
 				haveCloseBox();
-				res("toggled launcher");
+				res("Toggled Launcher");
+				break;
+			case "NotificationCenter":
+				App.toggle_window(`notification-center`);
+				App.get_window("launcher")?.hide()
+				haveCloseBox();
+				res("Toggled Notification Center");
 				break;
 			default:
-				res("unknown command");
+				res(`I don't know what "${request}" is.`);
 				break;
 		}
 	},
@@ -60,13 +72,14 @@ App.start({
 		// some widgets exist on all monitors, e.g. Desktop()
 		for (const gdkmonitor of App.get_monitors()) {
 			Bar(gdkmonitor)
-			Desktop(gdkmonitor)
+			// Desktop(gdkmonitor)
 		}
 		// These widgets are monitor-agnostic
 		Control()
 		OnScreenDisplay()
 		Power()
 		Notifications()
+		NotificationCenter()
 		Launcher()
 		CloseBox()
 	}

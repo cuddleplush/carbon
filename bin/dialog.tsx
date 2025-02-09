@@ -1,6 +1,6 @@
-#!/usr/bin/env -S ags run
+#!/usr/bin/env -S ags run --gtk4
 
-import { App, Astal, Gtk, Gdk } from "astal/gtk3"
+import { App, Astal, Gtk, Gdk } from "astal/gtk4"
 
 const { TOP, BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor
 const { IGNORE } = Astal.Exclusivity
@@ -55,21 +55,19 @@ App.start({
             App.quit()
         }
 
-        function onKeyPress(_: Astal.Window, event: Gdk.Event) {
-            if (event.get_keyval()[1] === Gdk.KEY_Escape) {
-                no()
-            }
-        }
-
         <window
-            onKeyPressEvent={onKeyPress}
+			onKeyPressed={(_, keyval) => {
+				if (keyval === Gdk.KEY_Escape) {
+					no()
+				}}
+			}
             exclusivity={IGNORE}
             keymode={EXCLUSIVE}
 			namespace={"carbon-dialog"}
             anchor={TOP | BOTTOM | LEFT | RIGHT}>
             <box halign={CENTER} valign={CENTER} vertical>
-                <label className="title" label="Are you sure you want to" />
-                <label className="action" label={`${action}?`} />
+                <label cssClasses={["title"]} label="Are you sure you want to" />
+                <label cssClasses={["action"]} label={`${action}?`} />
                 <box homogeneous>
                     <button onClicked={yes}>
                         Yes
