@@ -2,16 +2,14 @@ import { App } from "astal/gtk4"
 
 import { Style } from "./lib"
 
-import Notifications from "./widget/notifs/NotificationPopup"
-import NotificationCenter from "./widget/notifs/NotificationCenter"
 // import Desktop from "./widget/desktop/desktop"
 import Bar 					from "./widget/bar/Bar"
 import Power 				from "./widget/power/Power"
 import Control 				from "./widget/control/Control"
 import OnScreenDisplay 		from "./widget/osd/OSD"
-// import Notifications 		from "./widget/notifsv2/NotificationPopup"
-// import NotificationCenter 	from "./widget/notifsv2/NotificationCenter"
 import Launcher 			from "./widget/launcher/Launcher"
+import Notifications 		from "./widget/notifs/NotificationPopup"
+import NotificationCenter 	from "./widget/notifs/NotificationCenter"
 import CloseBox 			from "./widget/closebox/Closebox"
 
 // Apply our scss using the sassc transpiler
