@@ -6,7 +6,10 @@ A desktop shell using the [Astal](https://github.com/Aylur/astal) library.
 > It will probably also work fine without these plugins if you only have 1 output.
 
 ## Screenshots
-todo
+![20250211_18h48m03s_grim](https://github.com/user-attachments/assets/cda7ad8b-08ef-4dcc-8bda-19ede1500072)
+![20250211_18h56m21s_grim](https://github.com/user-attachments/assets/0edc6e79-08ba-4e70-9ad9-6bd1740ccfed)
+![20250211_18h52m25s_grim](https://github.com/user-attachments/assets/2a15f29f-d61b-439e-9100-e8cde1756764)
+
 
 ## Dependencies
 - `astal`
