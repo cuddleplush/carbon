@@ -1,9 +1,12 @@
-#!/usr/bin/env -S ags run
+#!/usr/bin/env -S ags run --gtk4
 
 import Hyprland from "gi://AstalHyprland";
+import Pango from "gi://Pango?version=1.0";
 
-import { App, Astal, Gtk, Gdk } from "astal/gtk3"
+import { App, Astal, Gtk, Gdk } from "astal/gtk4"
 import { bind, Variable } from "astal";
+
+import style from "./carbon-share-picker.scss"
 
 const { TOP, BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor
 const { IGNORE } = Astal.Exclusivity
@@ -12,61 +15,8 @@ const { CENTER } = Gtk.Align
 
 App.start({
     instanceName: "tmp" + Date.now(),
-    css: /* css */`
-		* {
-all: unset;
-			border-radius: 0px;	
-		}
-        window {
-            background-color: alpha(black, 0.3);
-        }
-
-        window > box {
-            margin: 8px;
-            padding: 8px;
-            box-shadow: 0 0 5px 5px alpha(black, 0.3);
-            border-radius: 0px;
-            background-color: #0F0F0F;
-            color: white;
-            min-width: 200px;
-        }
-
-        label {
-            font-size: 15px;
-			color: #cdcdcd;
-        }
-
-        .action {
-            font-size: large;
-        }
-
-        button {
-			padding: 8px;
-			transition: all 300ms cubic-bezier(0, 0, 0.2, 1);
-			margin: 8px;
-			background-color: #1b1b1b;
-			font-size: 15px;
-        }
-
-		button.active {
-			background-color: #2f2f2f;
-		}
-
-		button:hover {
-			background-color: #525252;
-		}
-		
-		scrollable {
-			all: unset;
-			border: 0px;
-		}
-separator {
-  margin: 0 8px;
-  background-color: #525252;
-}
-
-`,
-    main: () => {
+    css: style,
+    main() {
 		const hyprland = Hyprland.get_default()
 
 		function picked(pickedElement: Hyprland.Monitor | Hyprland.Client) {
@@ -96,7 +46,7 @@ separator {
 					onClicked={() => picked(client)}>
 					<label
 						maxWidthChars={35}
-						truncate
+						ellipsize={Pango.EllipsizeMode.END}
 						label={`${client.title}`}
 						halign={Gtk.Align.START}>
 					</label>
@@ -104,47 +54,48 @@ separator {
 			}
 		}
 
-        function onKeyPress(_: Astal.Window, event: Gdk.Event) {
-            if (event.get_keyval()[1] === Gdk.KEY_Escape) {
-                App.quit();
-            }
-        }
+		function onKeyPressed(_: any, keyval: number) {
+			if (keyval === Gdk.KEY_Escape) {
+				App.quit();
+			}
+		}
 
 		const page = Variable("monitors");
 		const pageHeight = bind(page).as((v) => {
 			if (v != "monitors") {
-				return `min-height: 350px;`;
+				return 350;
 			} else {
-				return `min-height: 0px;`;
+				return 0;
 			}
 		});
 
 		<window
-			onKeyPressEvent={onKeyPress}
+			visible
+			onKeyPressed={onKeyPressed}
 			exclusivity={IGNORE}
 			keymode={EXCLUSIVE}
 			namespace={"carbon-dialog"}
 			anchor={TOP | BOTTOM | LEFT | RIGHT}>
-			<box halign={CENTER} valign={CENTER} vertical css={pageHeight}>
-				<box vertical={false} homogeneous css={"margin-bottom: 8px;"}>
+			<box halign={CENTER} valign={CENTER} vertical heightRequest={pageHeight}>
+				<box vertical={false} homogeneous>
 					<button
 						label={"Monitors"}
-						className={bind(page).as((p) => p === "monitors" ? "button active" : "button")}
+						cssClasses={bind(page).as((p) => p === "monitors" ? ["button", "active"] : ["button"])}
 						onClicked={() => page.set("monitors")}>
 					</button>
 					<button
 						label={"Windows"}
-						className={bind(page).as((p) => p === "clients" ? "button active" : "button")}
+						cssClasses={bind(page).as((p) => p === "clients" ? ["button", "active"] : ["button"])}
 						onClicked={() => page.set("clients")}>
 					</button>
 				</box>
-				<Gtk.Separator visible />
+				<box cssClasses={["separator"]} heightRequest={1}/>
 				<stack
-					shown={bind(page)}
+					visibleChildName={bind(page)}
 					transitionType={Gtk.StackTransitionType.SLIDE_LEFT_RIGHT}
 					transitionDuration={200}>
 					<box vertical name={"monitors"}>
-						<label label={"Select a screen to share"} css={"margin: 16px 0 8px 0"}/>
+						<label label={"Select a screen to share"}/>
 						{bind(hyprland, "monitors").as((monitors) => {
 							return monitors
 								.sort((a, b) => a.id - b.id)
@@ -154,10 +105,10 @@ separator {
 						})}
 					</box>
 					<box vertical name={"clients"}>
-						<label label={"Select a window to share"} css={"margin: 16px 0 8px 0"}/>
-						<scrollable vexpand
-							vscroll={Gtk.PolicyType.ALWAYS}
-							hscroll={Gtk.PolicyType.NEVER}>
+						<label label={"Select a window to share"}/>
+						<Gtk.ScrolledWindow vexpand
+							vscrollbar_policy={Gtk.PolicyType.ALWAYS}
+							hscrollbar_policy={Gtk.PolicyType.NEVER}>
 							<box vertical>
 								{bind(hyprland, "clients").as((clients) => {
 									return clients
@@ -166,7 +117,7 @@ separator {
 										});
 								})}
 							</box>
-						</scrollable>
+						</Gtk.ScrolledWindow>
 					</box>
 				</stack>
 			</box>
