@@ -21,3 +21,10 @@ todo
 ## Running
 git clone blah blah you know how it goes.
 start with `ags run --gtk4 -d path/to/repo`
+
+## Acknowledgements
+Donate to Aylur, the creator of Astal: https://ko-fi.com/aylur
+### Code inspiriation(theft) from
+[epik-shell](https://github.com/ezerinz/epik-shell)<br>
+[desktop-shell](https://github.com/Mabi19/desktop-shell)<br>
+[ags-gtk4](https://github.com/gitmeED331/ags-gtk4)
