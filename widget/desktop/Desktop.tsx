@@ -1,51 +1,78 @@
-import { Astal, Gdk, App } from "astal/gtk4"
-import Gio from "gi://Gio?version=2.0"
+import { Astal, Gdk, Gtk, App } from "astal/gtk4"
 import { exec } from "astal";
 
-const powermenu = new Gio.Menu();
-powermenu.append("Suspend", "powermenu.suspend");
-powermenu.append("Shutdown", "powermenu.shutdown");
-powermenu.append("Reboot", "powermenu.reboot");
+import { desktopMenu } from "./DesktopMenu";
+import { desktopMenuGroup } from "./DesktopMenu";
 
-const suspendAction = new Gio.SimpleAction({ name: "suspend" });
-suspendAction.connect("activate", () => exec("systemctl sleep"));
-const shutdownAction = new Gio.SimpleAction({ name: "shutdown" });
-shutdownAction.connect("activate", () => exec("systemctl poweroff"));
-const rebootAction = new Gio.SimpleAction({ name: "reboot" });
-rebootAction.connect("activate", () => exec("systemctl reboot"));
-
-const powermenuGroup = new Gio.SimpleActionGroup();
-powermenuGroup.add_action(suspendAction);
-powermenuGroup.add_action(shutdownAction);
-powermenuGroup.add_action(rebootAction);
-
-const PowerButton = () => (
-    <menubutton
-        name="power-button"
+function Menu(): JSX.Element {
+	const menuButton = <menubutton
+		name="desktop-menu"
 		cssClasses={["desktop"]}
-        menuModel={powermenu}
-        setup={(self) => self.insert_action_group("powermenu", powermenuGroup)}
-    >
-        <image iconName="system-shutdown-symbolic" />
-    </menubutton>
-);
+		menuModel={desktopMenu}
+		setup={(self) => {
+			self.insert_action_group("desktop-menu", desktopMenuGroup)
+		}}>
+		<label
+			cssClasses={["splash"]}
+			valign={Gtk.Align.END}
+			halign={Gtk.Align.CENTER}
+			hexpand
+			vexpand
+			setup={(self: any) => {
+				self.label = exec(`bash -c "hyprctl splash"`)
+			}}>
+		</label>
+	</menubutton> as Gtk.MenuButton
+
+	const controller = new Gtk.EventControllerLegacy({
+		propagationPhase: Gtk.PropagationPhase.CAPTURE,
+	});
+	let poppedUp = false
+	controller.connect("event", (_c, event) => {
+		const type = event.get_event_type();
+
+		if (type == Gdk.EventType.BUTTON_RELEASE) {
+			const pressEvent = event as Gdk.ButtonEvent;
+			const mouseButton = pressEvent.get_button();
+			const [_, x, y] = pressEvent.get_position();
+
+			if (mouseButton == Gdk.BUTTON_SECONDARY) {
+				if (poppedUp) {
+					menuButton.popdown()
+					poppedUp = false
+				} else {
+					menuButton.popover.set_pointing_to(new Gdk.Rectangle({x: x + 85, y: y - 12, width: 1, height: 1}))
+					menuButton.popup()
+					poppedUp = true
+				}
+			} else if (mouseButton == Gdk.BUTTON_PRIMARY) {
+				if (poppedUp) {
+					menuButton.popdown()
+					poppedUp = false
+				}
+			}
+		}
+		return true;
+	});
+
+	menuButton.add_controller(controller);
+	return menuButton;
+}
 
 export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 	return <window
 		visible
 		name={`desktop`}
-		widthRequest={200}
-		heightRequest={200}
-		// anchor={Astal.WindowAnchor.TOP
-		// | Astal.WindowAnchor.BOTTOM
-		// | Astal.WindowAnchor.LEFT
-		// | Astal.WindowAnchor.RIGHT}
+		anchor={Astal.WindowAnchor.TOP
+			| Astal.WindowAnchor.BOTTOM
+			| Astal.WindowAnchor.LEFT
+			| Astal.WindowAnchor.RIGHT}
 		exclusivity={Astal.Exclusivity.IGNORE}
 		keymode={Astal.Keymode.NONE}
 		layer={Astal.Layer.BOTTOM}
 		gdkmonitor={gdkmonitor}
 		application={App} >
-        <PowerButton/>
+		<Menu/>
 	</window>
 }
 

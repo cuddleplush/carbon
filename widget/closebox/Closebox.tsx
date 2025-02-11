@@ -6,6 +6,7 @@ import { bind } from "astal"
 
 function closeBox(): JSX.Element {
 	return <box
+		visible={true}
 		cssClasses={["closebox"]}
 		onButtonPressed={(_, buttonval) => {
 			if (buttonval.get_button() === Gdk.BUTTON_PRIMARY) {
@@ -19,6 +20,9 @@ function closeBox(): JSX.Element {
 			})
 		})}
 		vexpand>
+
+		{/* THE SILLY (DO NOT REMOVE)*/}
+		<box cssClasses={["the-silly"]}/>
 	</box>
 }
 

@@ -5,7 +5,7 @@ import { Bash, hideWindows } from "../../lib/"
 
 function clicked(cmd: string, exec: string) {
 	App.toggle_window(`power`);
-	execAsync(["bash", "-c", `~/.config/astal/carbon-tsx-gtk4/bin/dialog.tsx -a ${cmd}`])
+	execAsync(["bash", "-c", `~/.config/astal/carbon-tsx-gtk3/bin/dialog.tsx -a ${cmd}`])
 		.then((out) => out === "yes" ? Bash(exec) : print("no"))
 		.catch((err) => console.error(err))
 }

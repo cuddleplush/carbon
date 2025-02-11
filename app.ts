@@ -2,7 +2,7 @@ import { App } from "astal/gtk4"
 
 import { Style } from "./lib"
 
-// import Desktop from "./widget/desktop/desktop"
+import Desktop 				from "./widget/desktop/Desktop"
 import Bar 					from "./widget/bar/Bar"
 import Power 				from "./widget/power/Power"
 import Control 				from "./widget/control/Control"
@@ -24,7 +24,7 @@ App.start({
 		// TODO: de-uglify
 		function haveCloseBox() { 
 			if (!App.get_window("closebox")?.is_visible()) {
-				App.toggle_window(`closebox`);
+				App.get_window(`closebox`)?.show();
 			} else if (
 				!App.get_window("control")?.is_visible()
 				&& !App.get_window("power")?.is_visible()
@@ -70,7 +70,7 @@ App.start({
 		// some widgets exist on all monitors, e.g. Desktop()
 		for (const gdkmonitor of App.get_monitors()) {
 			Bar(gdkmonitor)
-			// Desktop(gdkmonitor)
+			Desktop(gdkmonitor)
 		}
 		// These widgets are monitor-agnostic
 		Control()
