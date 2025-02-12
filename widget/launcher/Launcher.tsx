@@ -37,8 +37,8 @@ function ApplicationList() {
 					: apps.map(app => (
 						<button
 							cssClasses={
-								selectedApp(selectedApp =>
-									selectedApp.get_name() === app.get_name()
+								selectedApp(selected =>
+									selected.get_name() === app.get_name()
 										? ['app-button', 'selected']
 										: ['app-button']
 								)
@@ -88,7 +88,7 @@ const entry = <entry
 			const winName = win.name;
 			const visible = win.visible;
 
-			if (winName == "launcher" && visible) {							
+			if (winName === "launcher" && visible) {							
 				self.text = ''
 				queriedApps.set(applications.fuzzy_query(''))
 				selectedApp.set(queriedApps.get()[0])

@@ -21,10 +21,10 @@ App.start({
 
 		function picked(pickedElement: Hyprland.Monitor | Hyprland.Client) {
 			if (pickedElement instanceof Hyprland.Monitor) {
-				let monitor = pickedElement
+				const monitor = pickedElement
 				print(`[SELECTION]/screen:${monitor.name}`)
 			} else {
-				let client = pickedElement
+				const client = pickedElement
 				print(`[SELECTION]/window:${client.address}`)
 			}
 			App.quit();
@@ -32,7 +32,7 @@ App.start({
 
 		function pickable(pickableElement: Hyprland.Monitor | Hyprland.Client) {
 			if (pickableElement instanceof Hyprland.Monitor) {
-				let monitor = pickableElement
+				const monitor = pickableElement
 				return <button
 					onClicked={() => picked(monitor)}>
 					<label
@@ -41,7 +41,7 @@ App.start({
 					</label>
 				</button>
 			} else {
-				let client = pickableElement
+				const client = pickableElement
 				return <button
 					onClicked={() => picked(client)}>
 					<label
@@ -54,7 +54,7 @@ App.start({
 			}
 		}
 
-		function onKeyPressed(_: any, keyval: number) {
+		function onKeyPressed(_: Astal.Window, keyval: number): void {
 			if (keyval === Gdk.KEY_Escape) {
 				App.quit();
 			}
@@ -62,7 +62,7 @@ App.start({
 
 		const page = Variable("monitors");
 		const pageHeight = bind(page).as((v) => {
-			if (v != "monitors") {
+			if (v !== "monitors") {
 				return 350;
 			} else {
 				return 0;

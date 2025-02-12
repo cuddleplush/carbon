@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import AstalNotifd from "gi://AstalNotifd";
 
 import { timeout, Variable } from "astal";
@@ -79,7 +80,7 @@ export default function NotificationPopup() {
     const box = <box vertical={true} noImplicitDestroy={true}></box> as Astal.Box;
 
     notifs.connect("create", (_, entry: WidgetEntry) => {
-        if (box.get_children().length == 0) {
+        if (box.get_children().length === 0) {
             windowVisible.set(true);
         }
         box.prepend(entry.widget);
@@ -91,7 +92,7 @@ export default function NotificationPopup() {
     notifs.connect("destroy", (_, entry: WidgetEntry) => {
 		// print("destroy called")
         box.remove(entry.widget);
-        if (box.get_first_child() == null) {
+        if (box.get_first_child() === null) {
             windowVisible.set(false);
         }
     });

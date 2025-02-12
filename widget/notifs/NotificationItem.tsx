@@ -48,7 +48,7 @@ function NotificationImage({
 
 	const path = notification.image
 
-	if (notification.appName == "grimblast") {
+	if (notification.appName === "grimblast") {
 		return <image {...props} file={notification.appIcon}/>
 	} else if (!path) {
 		return <></>;
@@ -84,12 +84,12 @@ export function NotificationItem(
 	/** Invoke an action by its ID, checking if it exists */
 	function handleBackgroundClick(event: Gdk.ButtonEvent) {
 		const button = event.get_button();
-		if (button == Gdk.BUTTON_PRIMARY) {
-			const action = notification.get_actions().find((action) => action.id == "default");
+		if (button === Gdk.BUTTON_PRIMARY) {
+			const action = notification.get_actions().find((a) => a.id === "default");
 			if (action) {
 				notification.invoke("default");
 			}
-		} else if (button == Gdk.BUTTON_SECONDARY) {
+		} else if (button === Gdk.BUTTON_SECONDARY) {
 			// timer.cancel();
 			notification.dismiss();
 		}
@@ -97,7 +97,7 @@ export function NotificationItem(
 
 	let icon: Gtk.Widget | null;
 	if (notification.appIcon) {
-		if (notification.appName == "grimblast") {
+		if (notification.appName === "grimblast") {
 			icon = Gtk.Image.new_from_icon_name("dialog-information-symbolic");
 		} else if (fileExists(notification.appIcon)) {
 			icon = Gtk.Image.new_from_file(notification.appIcon);

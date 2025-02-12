@@ -18,7 +18,7 @@ function Menu(): JSX.Element {
 			halign={Gtk.Align.CENTER}
 			hexpand
 			vexpand
-			setup={(self: any) => {
+			setup={(self) => {
 				self.label = exec(`bash -c "hyprctl splash"`)
 			}}>
 		</label>
@@ -31,12 +31,13 @@ function Menu(): JSX.Element {
 	controller.connect("event", (_c, event) => {
 		const type = event.get_event_type();
 
-		if (type == Gdk.EventType.BUTTON_RELEASE) {
+		if (type === Gdk.EventType.BUTTON_RELEASE) {
 			const pressEvent = event as Gdk.ButtonEvent;
 			const mouseButton = pressEvent.get_button();
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const [_, x, y] = pressEvent.get_position();
 
-			if (mouseButton == Gdk.BUTTON_SECONDARY) {
+			if (mouseButton === Gdk.BUTTON_SECONDARY) {
 				if (poppedUp) {
 					menuButton.popdown()
 					poppedUp = false
@@ -45,7 +46,7 @@ function Menu(): JSX.Element {
 					menuButton.popup()
 					poppedUp = true
 				}
-			} else if (mouseButton == Gdk.BUTTON_PRIMARY) {
+			} else if (mouseButton === Gdk.BUTTON_PRIMARY) {
 				if (poppedUp) {
 					menuButton.popdown()
 					poppedUp = false

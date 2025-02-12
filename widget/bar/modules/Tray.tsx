@@ -24,25 +24,26 @@ function TrayItem({ item }: { item: AstalTray.TrayItem }) {
         const type = event.get_event_type();
 
         if (
-            type == Gdk.EventType.BUTTON_PRESS &&
-            (event as Gdk.ButtonEvent).get_button() == Gdk.BUTTON_SECONDARY
+            type === Gdk.EventType.BUTTON_PRESS &&
+            (event as Gdk.ButtonEvent).get_button() === Gdk.BUTTON_SECONDARY
         ) {
             // do this earlier for less flash-of-invalid-content
             item.about_to_show();
         }
 
-        if (type == Gdk.EventType.BUTTON_RELEASE) {
+        if (type === Gdk.EventType.BUTTON_RELEASE) {
             const pressEvent = event as Gdk.ButtonEvent;
             const mouseButton = pressEvent.get_button();
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const [_, x, y] = pressEvent.get_position();
-            if (pressEvent.get_surface() != button.get_native()?.get_surface()) {
+            if (pressEvent.get_surface() !== button.get_native()?.get_surface()) {
                 // this also sometimes captures the click on the popup for some reason
                 return false;
             }
 
-            if (mouseButton == Gdk.BUTTON_PRIMARY) {
+            if (mouseButton === Gdk.BUTTON_PRIMARY) {
                 item.activate(x, y);
-            } else if (mouseButton == Gdk.BUTTON_MIDDLE) {
+            } else if (mouseButton === Gdk.BUTTON_MIDDLE) {
                 item.secondary_activate(x, y);
             } else {
                 button.popup();
@@ -53,12 +54,12 @@ function TrayItem({ item }: { item: AstalTray.TrayItem }) {
     });
     button.add_controller(controller);
 
-    hook(button, item, "notify::menu-model", (button) => {
-        (button.popover as Gtk.PopoverMenu).set_menu_model(item.menuModel);
+    hook(button, item, "notify::menu-model", (btn) => {
+        (btn.popover as Gtk.PopoverMenu).set_menu_model(item.menuModel);
     });
-    hook(button, item, "notify::action-group", (button) => {
+    hook(button, item, "notify::action-group", (btn) => {
         // This replaces it, I checked the source code
-        button.insert_action_group("dbusmenu", item.actionGroup);
+        btn.insert_action_group("dbusmenu", item.actionGroup);
     });
 
     return button;

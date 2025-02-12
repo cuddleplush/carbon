@@ -7,7 +7,7 @@ export default function(): JSX.Element {
         GLib.DateTime.new_now_local().format("%H:%M")!)
 
     const date = Variable<string>("").poll(1000, () =>
-        GLib.DateTime.new_now_local().format("%A\ %d")!)
+        GLib.DateTime.new_now_local().format("%A %d")!)
 
 	return <box spacing={8} cssClasses={["time-box"]}>
 		<box>

@@ -9,14 +9,14 @@ import { toggleClassName } from "../../../lib/";
 const hyprland = Hyprland.get_default()
 
 function Task(client: Hyprland.Client): JSX.Element {
-	var connections: number[] = [];
-	var active = bind(hyprland, "focusedWorkspace").as(() => {
-		return client.workspace.id == client.monitor.activeWorkspace.id;
+	const connections: number[] = [];
+	const active = bind(hyprland, "focusedWorkspace").as(() => {
+		return client.workspace.id === client.monitor.activeWorkspace.id;
 	});
-	var focused = bind(hyprland, "focusedClient").as((focused) => {
-		return focused == client;
+	const focused = bind(hyprland, "focusedClient").as((fc) => {
+		return fc === client;
 	});
-	var disconnectors: { (): any }[] = [];
+	const disconnectors: { (): void }[] = [];
 	return <button
 		onButtonPressed={() => {
 			client.workspace.focus();
@@ -31,8 +31,8 @@ function Task(client: Hyprland.Client): JSX.Element {
 				}),
 			);
 			disconnectors.push(
-				bind(hyprland, "focused_client").subscribe((focused) => {
-					toggleClassName(self, client == focused, "focused")
+				bind(hyprland, "focusedClient").subscribe((fc) => {
+					toggleClassName(self, client === fc, "focused")
 				}),
 			);
 			toggleClassName(self, active.get(), "active")
@@ -61,7 +61,7 @@ export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 		<button
 			cssClasses={["module", "empty"]} 
 			label={"Desktop"}
-			setup={(self: any) => {
+			setup={(self) => {
 				function empty() {
 					self.visible = hyprland.clients.filter((c) => c.monitor.model === gdkmonitor.model).length === 0
 						? true : false

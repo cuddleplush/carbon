@@ -1,4 +1,4 @@
-import { App, Astal, Gdk, Gtk } from "astal/gtk4"
+import { App, Astal, Gtk } from "astal/gtk4"
 import { timeout } from "astal/time"
 import Variable from "astal/variable"
 import Wp from "gi://AstalWp"

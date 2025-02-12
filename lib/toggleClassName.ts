@@ -1,5 +1,7 @@
+import { Gtk } from "astal/gtk4"
+
 export default function toggleClassName(
-	widget: any,
+	widget: Gtk.Widget,
 	bool: boolean,
 	className: string
 ): void {

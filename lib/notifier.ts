@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { type Subscribable } from "astal/binding";
 
 export default class Notifier<T = void> implements Subscribable<T> {

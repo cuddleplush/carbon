@@ -21,7 +21,7 @@ export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
     const hyprland = Hyprland.get_default()
 
 	let monitorID: number = 0;
-	for (let hyprMonitor of hyprland.monitors) {
+	for (const hyprMonitor of hyprland.monitors) {
 		if (hyprMonitor.model === gdkmonitor.model) {
 			monitorID = hyprMonitor.id;
 		}
@@ -35,6 +35,7 @@ export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
             const className = Variable.derive([
                 bind(workspace, "clients"),
 				bind(hyprland, "focusedWorkspace")
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             ], (clients, _) => {
 				return hyprland.get_monitor(monitorID).active_workspace === workspace ? ["module", "workspace", "active"]
                 	: clients.length > 0 ? ["module", "workspace", "occupied"]

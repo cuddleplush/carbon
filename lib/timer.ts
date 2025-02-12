@@ -32,7 +32,7 @@ export default class Timer extends Notifier {
 
     protected unsubscribe(callback: () => void): void {
         super.unsubscribe(callback);
-        if (this.subscriptions.size == 0 && this.pauseCount > 0 && this.interval != null) {
+        if (this.subscriptions.size === 0 && this.pauseCount > 0 && this.interval !== null) {
             console.warn("Timer was disconnected with active pauses");
             // clean it up anyway
             this.pauseCount = 0;

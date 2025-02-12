@@ -4,8 +4,8 @@ import { debug, barFloat, barSplit, nightLight } from "../../../lib/vars"
 
 function toggleButton(toggleable: Variable<boolean>, label: string): JSX.Element {
 	return <button
-		setup={(self: any) => {
-			if (toggleable.get() == true) {
+		setup={(self) => {
+			if (toggleable.get() === true) {
 				self.add_css_class("active")
 			} else {
 				self.remove_css_class("active")
