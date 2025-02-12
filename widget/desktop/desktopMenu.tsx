@@ -1,6 +1,6 @@
 import Gio from "gi://Gio?version=2.0"
 
-import { Bash } from "../../lib";
+import { bash } from "../../lib";
 
 const gamesMenu = new Gio.Menu();
 gamesMenu.append("Steam", "desktop-menu.steam")
@@ -30,7 +30,7 @@ export const desktopMenuGroup = new Gio.SimpleActionGroup();
 
 function action(actionName: string | Gio.SimpleAction | Gio.Action, cmd: string) {
 	actionName = new Gio.SimpleAction({ name: actionName as string });
-	actionName.connect("activate", () => Bash(cmd));
+	actionName.connect("activate", () => bash(cmd));
 	desktopMenuGroup.add_action(actionName);
 }
 

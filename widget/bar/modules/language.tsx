@@ -1,4 +1,5 @@
 import Hyprland from "gi://AstalHyprland";
+
 import { hook } from "astal/gtk4";
 import { Gdk } from 'astal/gtk4'
 

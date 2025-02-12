@@ -1,8 +1,8 @@
 import { Astal, Gdk, Gtk, App } from "astal/gtk4"
 import { exec } from "astal";
 
-import { desktopMenu } from "./DesktopMenu";
-import { desktopMenuGroup } from "./DesktopMenu";
+import { desktopMenu } from "./desktopMenu";
+import { desktopMenuGroup } from "./desktopMenu";
 
 function Menu(): JSX.Element {
 	const menuButton = <menubutton

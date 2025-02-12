@@ -1,6 +1,7 @@
 import Mpris from "gi://AstalMpris"
 
 import { bind } from "astal"
+
 import vars from "../../../lib/vars"
 
 export default function(): JSX.Element {

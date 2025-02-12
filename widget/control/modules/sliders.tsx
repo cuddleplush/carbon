@@ -1,6 +1,7 @@
+import Wp from "gi://AstalWp"
+
 import { bind } from "astal"
 import { Gdk } from "astal/gtk4"
-import Wp from "gi://AstalWp"
 
 export function sliders(type: string): JSX.Element {
 	const device = type === "speaker"

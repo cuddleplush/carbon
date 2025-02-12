@@ -6,8 +6,8 @@ import GObject, { register, signal } from "astal/gobject";
 import { App, Astal } from "astal/gtk4";
 
 // import { dumpNotification } from "./NotificationDump";
-import { WidgetEntry } from "./NotificationItem";
-import { NotificationItem } from "./NotificationItem";
+import { WidgetEntry } from "./notificationItem";
+import { NotificationItem } from "./notificationItem";
 
 @register()
 class NotificationTracker extends GObject.Object {

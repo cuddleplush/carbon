@@ -1,7 +1,9 @@
+import AstalWp from "gi://AstalWp?version=0.1";
+
 import { Gtk, Widget, Astal, hook } from "astal/gtk4";
 import { bind, timeout } from "astal";
-import Progress from "./Progress";
-import AstalWp from "gi://AstalWp?version=0.1";
+
+import Progress from "./progress";
 
 const DELAY = 2500;
 

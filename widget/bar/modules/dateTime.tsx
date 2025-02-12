@@ -1,6 +1,7 @@
 import { Variable, GLib } from "astal"
-import { Bash } from "../../../lib/"
 import { Gdk } from 'astal/gtk4'
+
+import { bash } from "../../../lib/"
 
 export default function(): JSX.Element { 
     const time = Variable<string>("").poll(1000, () =>
@@ -16,7 +17,7 @@ export default function(): JSX.Element {
 				cssClasses={["module", "clock"]}
 				tooltipText={"Open Calendar"}
 				cursor={Gdk.Cursor.new_from_name('pointer', null)}
-				onButtonPressed={() => Bash("gnome-calendar")} >
+				onButtonPressed={() => bash("gnome-calendar")} >
 				<label label={date()} />
 			</button>
 		</box>
@@ -26,7 +27,7 @@ export default function(): JSX.Element {
 				cssClasses={["module", "date"]}
 				tooltipText={"Open Clocks"}
 				cursor={Gdk.Cursor.new_from_name('pointer', null)}
-				onButtonPressed={() => Bash("gnome-clocks")} >
+				onButtonPressed={() => bash("gnome-clocks")} >
 				<label label={time()} />
 			</button>
 		</box>

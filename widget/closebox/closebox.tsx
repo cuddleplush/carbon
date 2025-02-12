@@ -1,8 +1,6 @@
 import { App, Gdk, Astal } from "astal/gtk4"
 
-import { debug } from "../../lib/vars"
-import { hideWindows, toggleClassName } from "../../lib/"
-import { bind } from "astal"
+import { hideWindows } from "../../lib/"
 
 function closeBox(): JSX.Element {
 	return <box
@@ -14,11 +12,6 @@ function closeBox(): JSX.Element {
 				print("hide")
 			}
 		}}
-		setup={((self) => {
-			bind(debug).as((value) => {
-				toggleClassName(self, value, "debug")
-			})
-		})}
 		vexpand>
 
 		{/* THE SILLY (DO NOT REMOVE)*/}

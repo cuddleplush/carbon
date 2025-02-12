@@ -1,15 +1,15 @@
-import Bash from "./bash";
-import hideWindows from "./hideWindows";
-import Notifier from "./notifier";
-import Style from "./style";
-import Timer from "./timer";
-import toggleClassName from "./toggleClassName";
+import bash 			from "./bash";
+import hideWindows 		from "./hideWindows";
+import notifier 		from "./notifier";
+import style 			from "./style";
+import timer 			from "./timer";
+import toggleClassName 	from "./toggleClassName";
 
 export {
-	Bash,
+	bash,
 	hideWindows,
-	Notifier,
-	Style,
-	Timer,
+	notifier,
+	style,
+	timer,
 	toggleClassName
 }

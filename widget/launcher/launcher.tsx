@@ -4,6 +4,7 @@ import Hyprland from "gi://AstalHyprland";
 
 import { App, Astal, Gdk, Gtk, hook } from 'astal/gtk4'
 import { Variable } from 'astal'
+
 import { hideWindows } from '../../lib/'
 
 

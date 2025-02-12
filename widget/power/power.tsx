@@ -1,12 +1,12 @@
 import { Gdk, Astal, App, Gtk } from "astal/gtk4"
 import { execAsync } from "astal"
 
-import { Bash, hideWindows } from "../../lib/"
+import { bash, hideWindows } from "../../lib/"
 
 function clicked(cmd: string, exec: string) {
 	App.toggle_window(`power`);
 	execAsync(["bash", "-c", `${SRC}/bin/dialog/app.tsx -a ${cmd}`])
-		.then((out) => out === "yes" ? Bash(exec) : print(out))
+		.then((out) => out === "yes" ? bash(exec) : print(out))
 		.catch((err) => console.error(err))
 }
 

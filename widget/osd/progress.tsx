@@ -1,4 +1,5 @@
 import { Gtk, Widget } from "astal/gtk4";
+
 import { toggleClassName } from "../../lib/";
 
 type ProgressProps = {

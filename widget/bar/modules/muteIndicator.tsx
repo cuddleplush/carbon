@@ -1,4 +1,5 @@
 import Wp from "gi://AstalWp"
+
 import { Gdk } from 'astal/gtk4'
 
 import { bind } from "astal"

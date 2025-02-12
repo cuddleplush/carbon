@@ -1,8 +1,10 @@
+import AstalNotifd from "gi://AstalNotifd";
+
 import { Astal, App, Gtk, Gdk, Widget } from "astal/gtk4";
 import { bind, Variable } from "astal";
-import AstalNotifd from "gi://AstalNotifd";
-import { NotificationItem } from "./NotificationItem";
+
 import { hideWindows } from "../../lib";
+import { NotificationItem } from "./notificationItem";
 
 export default function NotificationList() {
 	const Notif = AstalNotifd.get_default();

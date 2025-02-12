@@ -1,9 +1,11 @@
-import { interval } from "astal";
 import type AstalIO from "gi://AstalIO";
 import GLib from "gi://GLib";
+
+import { interval } from "astal";
+
 import Notifier from "./notifier";
 
-export default class Timer extends Notifier {
+export default class timer extends Notifier {
     private _pauseCount: number;
     public get pauseCount(): number {
         return this._pauseCount;

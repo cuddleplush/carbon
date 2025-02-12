@@ -1,19 +1,19 @@
 import { App } from "astal/gtk4"
 
-import { Style } from "./lib"
+import { style } from "./lib"
 
-import Desktop 				from "./widget/desktop/Desktop"
-import Bar 					from "./widget/bar/Bar"
-import Power 				from "./widget/power/Power"
-import Control 				from "./widget/control/Control"
-import OnScreenDisplay 		from "./widget/osd/OSD"
-import Launcher 			from "./widget/launcher/Launcher"
-import Notifications 		from "./widget/notifs/NotificationPopup"
-import NotificationCenter 	from "./widget/notifs/NotificationCenter"
-import CloseBox 			from "./widget/closebox/Closebox"
+import Desktop 				from "./widget/desktop/desktop"
+import Bar 					from "./widget/bar/bar"
+import Power 				from "./widget/power/power"
+import Control 				from "./widget/control/control"
+import OnScreenDisplay 		from "./widget/osd/osd"
+import Launcher 			from "./widget/launcher/launcher"
+import Notifications 		from "./widget/notifs/notificationPopup"
+import NotificationCenter 	from "./widget/notifs/notificationCenter"
+import CloseBox 			from "./widget/closebox/closebox"
 
 // Apply our scss using the sassc transpiler
-Style();
+style();
 
 // Start the shell
 App.start({

@@ -1,9 +1,9 @@
 import { App, Gdk, Astal } from "astal/gtk4"
 
-import { header } from "./modules/Header";
-import { sliders } from "./modules/Sliders";
-import { toggles } from "./modules/Toggles";
 import { hideWindows } from "../../lib/";
+import { header } from "./modules/header";
+import { sliders } from "./modules/sliders";
+import { toggles } from "./modules/toggles";
 
 function controlBox(): JSX.Element {
 	return <box

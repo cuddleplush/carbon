@@ -1,6 +1,7 @@
 import { Variable, exec } from "astal"
 import { Gtk, Gdk } from "astal/gtk4"
-import { Bash } from "../../../lib/"
+
+import { bash } from "../../../lib/"
 
 export function header(): JSX.Element {
 	const uptime = Variable("").poll(1000, ["bash", "-c", "uptime -p | tail -c +4"])
@@ -30,15 +31,15 @@ export function header(): JSX.Element {
 			<button
 				label={"󰒓"}
 				cssClasses={["control-icon-button"]}
-				onClicked={() => Bash("foot -e nvim ~/.config/astal/carbon")} />
+				onClicked={() => bash("foot -e nvim ~/.config/astal/carbon")} />
 			<button
 				label={""}
 				cssClasses={["control-icon-button"]}
 				onButtonPressed={(_, buttonval) => {
 					if (buttonval.get_button() === Gdk.BUTTON_PRIMARY) {
-						Bash("rofi-wall.sh")
+						bash("rofi-wall.sh")
 					} else {
-						Bash("wpmgr next")
+						bash("wpmgr next")
 					}
 				}}>
 			</button>

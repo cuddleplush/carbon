@@ -1,9 +1,9 @@
 import Notifd from "gi://AstalNotifd"
 
 import { Gdk } from 'astal/gtk4'
-
-import { Bash } from "../../../lib/"
 import { bind, Variable } from "astal"
+
+import { bash } from "../../../lib/"
 
 export default function(): JSX.Element { 
 	const notifications = Notifd.get_default()
@@ -27,7 +27,7 @@ export default function(): JSX.Element {
 			cssClasses={["module", "icon-button"]}
 			cursor={Gdk.Cursor.new_from_name('pointer', null)}
 			tooltipText={bind(notifications, "notifications").as((n) => "Notifications " + "(" + n.length.toString() + ")")}
-			onButtonPressed={() => Bash('ags --instance carbon request NotificationCenter')}>
+			onButtonPressed={() => bash('ags --instance carbon request NotificationCenter')}>
 		</button>
 	</box>
 }

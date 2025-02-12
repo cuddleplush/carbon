@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Variable } from "astal"
 
-import { Bash } from "."
+import { bash } from "."
 
 // Settings
 export default {
@@ -32,6 +32,6 @@ barFloat.subscribe((value: boolean) => {
 })
 
 nightLight.subscribe((value: boolean) => {
-	value === true ? Bash("hyprshade on blue-light-filter")
-				   : Bash("hyprshade off")
+	value === true ? bash("hyprshade on blue-light-filter")
+				   : bash("hyprshade off")
 })
