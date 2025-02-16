@@ -1,15 +1,15 @@
 import { bind } from "astal"
 import { App, Astal, Gtk, Gdk } from "astal/gtk4"
 
-import Launcher	  from "./modules/controlMenuButton"
-import Workspaces from "./modules/workspaces"
-import Taskbar    from "./modules/taskbar"
-import Player     from "./modules/mprisStatus"
-import SysTray 	  from "./modules/tray"
-import Mute 	  from "./modules/muteIndicator"
-import Lang 	  from "./modules/language"
-import Date 	  from "./modules/dateTime"
-import NotifBell  from "./modules/notificationBell"
+import ControlButton	from "./modules/controlButton"
+import Workspaces 		from "./modules/workspaces"
+import Taskbar    		from "./modules/taskbar"
+import Player     		from "./modules/mprisStatus"
+import SysTray 	  		from "./modules/tray"
+import Mute 	 		from "./modules/muteIndicator"
+import Lang 	 		from "./modules/language"
+import Date 	 		from "./modules/dateTime"
+import NotifBell 		from "./modules/notificationBell"
 
 import { barFloat, barSplit } from "../../lib/vars"
 
@@ -17,7 +17,7 @@ function leftModules(gdkmonitor: Gdk.Monitor): JSX.Element {
 	return <box
 		spacing={8}
 		halign={Gtk.Align.START} >
-			<Launcher/>
+			<ControlButton/>
 			{Workspaces(gdkmonitor)}
 			{Taskbar(gdkmonitor)}
 	</box>

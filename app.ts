@@ -7,7 +7,6 @@ import Bar 					from "./widget/bar/bar"
 import Power 				from "./widget/power/power"
 import Control 				from "./widget/control/control"
 import OnScreenDisplay 		from "./widget/osd/osd"
-import Launcher 			from "./widget/launcher/launcher"
 import Notifications 		from "./widget/notifs/notificationPopup"
 import NotificationCenter 	from "./widget/notifs/notificationCenter"
 import CloseBox 			from "./widget/closebox/closebox"
@@ -28,7 +27,6 @@ App.start({
 			} else if (
 				!App.get_window("control")?.is_visible()
 				&& !App.get_window("power")?.is_visible()
-				&& !App.get_window("launcher")?.is_visible()
 				&& !App.get_window("notification-center")?.is_visible()
 			) {
 				App.get_window("closebox")!.hide();
@@ -45,15 +43,8 @@ App.start({
 				haveCloseBox();
 				res("Toggled Power Menu");
 				break;
-			case "Launcher":
-				App.toggle_window(`launcher`);
-				App.get_window("notification-center")?.hide()
-				haveCloseBox();
-				res("Toggled Launcher");
-				break;
 			case "NotificationCenter":
 				App.toggle_window(`notification-center`);
-				App.get_window("launcher")?.hide()
 				haveCloseBox();
 				res("Toggled Notification Center");
 				break;
@@ -78,7 +69,6 @@ App.start({
 		Power()
 		Notifications()
 		NotificationCenter()
-		Launcher()
 		CloseBox()
 	}
 })
