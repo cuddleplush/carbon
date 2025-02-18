@@ -1,51 +1,30 @@
 import Hyprland from "gi://AstalHyprland";
 import Pango from "gi://Pango?version=1.0";
 
-import { bind } from "astal"
+import { bind, Variable } from "astal"
 import { Gdk, hook } from "astal/gtk4"
-
-import { toggleClassName } from "../../../lib/";
 
 const hyprland = Hyprland.get_default()
 
 function Task(client: Hyprland.Client): JSX.Element {
-	const connections: number[] = [];
-	const active = bind(hyprland, "focusedWorkspace").as(() => {
-		return client.workspace.id === client.monitor.activeWorkspace.id;
-	});
-	const focused = bind(hyprland, "focusedClient").as((fc) => {
-		return fc === client;
-	});
-	const disconnectors: { (): void }[] = [];
+	const className = Variable.derive([
+		bind(hyprland, "focusedWorkspace"),
+		bind(hyprland, "focusedClient")
+	], (_fw, fc) => {
+			return fc === client ? ["module", "focused"]
+				: client.workspace.id === client.monitor.activeWorkspace.id ? ["module", "active"]
+					: ["module"]}
+	)
 	return <button
 		onButtonPressed={() => {
 			client.workspace.focus();
 		}}
-		setup={(self) => {
-			disconnectors.push(
-				bind(active).subscribe((a) => {
-					toggleClassName(self, a, "active")
-				}),
-				bind(focused).subscribe((f) => {
-					toggleClassName(self, f, "focused")
-				}),
-			);
-			disconnectors.push(
-				bind(hyprland, "focusedClient").subscribe((fc) => {
-					toggleClassName(self, client === fc, "focused")
-				}),
-			);
-			toggleClassName(self, active.get(), "active")
-			toggleClassName(self, focused.get(), "focused")
-		}}
-		onDestroy={() => {
-			connections.forEach((n) => hyprland.disconnect(n));
-			disconnectors.forEach((d) => d());
-		}}
-		cursor={Gdk.Cursor.new_from_name('pointer', null)}
-		cssClasses={["module"]}>
+		cssClasses={className()}
+		cursor={Gdk.Cursor.new_from_name('pointer', null)}>
 		<label
-			maxWidthChars={bind(active).as((v) => (v ? 20 : 10))}
+			maxWidthChars={bind(hyprland, "focusedWorkspace").as(() => {
+				return client.workspace.id === client.monitor.activeWorkspace.id ? 20 : 10
+			})}
             ellipsize={Pango.EllipsizeMode.END}
 			label={bind(client, "class").as((c) => c
 				.replace("footclient", "foot")
@@ -80,12 +59,18 @@ export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 							return c.length > 0 ? ["workspace-tasks"] : ["workspace-tasks", "empty"]
 						})}
 						visible={bind(workspace, "monitor").as((m) => {
-							return m.model === gdkmonitor.model
+							if (m) {
+								return m.model === gdkmonitor.model
+							} else { return false }
 						})}>
 						{bind(workspace, "clients").as((clients) => {
-							return clients
-								.sort((a, b) => (a.x + a.y) - (b.x + b.y))
-								.map(Task)
+							if (clients.length > 0) {
+								return clients
+									.sort((a, b) => (a.x + a.y) - (b.x + b.y))
+									.map(Task)
+							} else {
+								return <></>
+							}
 						})}
 					</box>
 				})

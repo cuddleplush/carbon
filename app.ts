@@ -18,7 +18,6 @@ style();
 App.start({
 	// https://aylur.github.io/astal/guide/typescript/cli-app#instance-identifier
 	instanceName: "carbon",
-
 	requestHandler(request: string, res: (_response: string) => void): void {
 		// TODO: de-uglify
 		function haveCloseBox() { 

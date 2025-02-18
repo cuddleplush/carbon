@@ -8,6 +8,6 @@ export default function(): JSX.Element {
 		cssClasses={["module", "icon-button"]}
 		cursor={Gdk.Cursor.new_from_name('pointer', null)}
 		tooltipText={"Control Panel"}
-		onButtonPressed={() => bash('ags --instance carbon request "toggle control"')}>
+		onButtonPressed={() => bash('ags --instance carbon request ControlPanel')}>
 	</button>
 }

@@ -46,8 +46,10 @@ class NotificationTracker extends GObject.Object {
 				cssClasses: ["Notification"],
 				setup: () => {
 					timeout(5000, () => {
-						this.#widgets.delete(id);
-						this.emit("destroy", newWidget);
+						if (this.#widgets.get(id)) {
+							this.#widgets.delete(id);
+							this.emit("destroy", newWidget);
+						}
 					})
 				}
 			});
@@ -77,7 +79,7 @@ export default function NotificationPopup() {
     const notifs = new NotificationTracker();
 
     const windowVisible = Variable(false);
-    const box = <box vertical={true} noImplicitDestroy={true}></box> as Astal.Box;
+    const box = <box vertical={true}></box> as Astal.Box;
 
     notifs.connect("create", (_, entry: WidgetEntry) => {
         if (box.get_children().length === 0) {
