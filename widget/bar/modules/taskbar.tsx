@@ -27,7 +27,6 @@ function Task(client: Hyprland.Client): JSX.Element {
 			})}
             ellipsize={Pango.EllipsizeMode.END}
 			label={bind(client, "class").as((c) => c
-				.replace("footclient", "foot")
 				.replace("com.obsproject.Studio", "obs")
 				.replace(/.*\..*?\.(.*)/, '$1')
 				.toLowerCase())}>
