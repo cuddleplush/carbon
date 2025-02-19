@@ -1,47 +1,5 @@
 @use "../colors" as *;
 
-.OSD,
-.osd {
-  background: transparent;
-  icon {
-    font-size: 16px;
-    margin-left: 16px;
-  }
-}
-
-.indicator .progress {
-  padding: 0px;
-
-  border: 8px solid $bg;
-  border-radius: 0px;
-  margin-bottom: 20px;
-  background-color: $bg3;
-
-  min-width: 400px;
-  min-height: 48px;
-
-  .fill {
-    transition: background-color 3s ease-in-out;
-    border-radius: 0px;
-    background-color: $fg;
-    color: $fg;
-    transition: min-width 0.1s;
-    &.muted {
-      background-color: $red;
-    }
-  }
-}
-
-.osd-icon {
-  color: $fg;
-  padding: 0 0 0 13px;
-}
-
-.indicatorBox {
-  background-color: $bg2;
-  min-width: 48px;
-}
-
 popover contents {
   color: $fg;
   padding: 8px;

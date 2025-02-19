@@ -14,7 +14,7 @@ window {
 window > box {
   margin: 8px;
   padding: 8px;
-  box-shadow: color.adjust($black, $alpha: - 0.5) 0px 0px 6px 3px;
+  box-shadow: $box-shadow; 
   border-radius: 0px;
   background-color: #0F0F0F;
   color: white;

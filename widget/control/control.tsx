@@ -10,8 +10,11 @@ function controlBox(): JSX.Element {
 		cssClasses={["control"]}
 		vertical={true} >
 		{header()}
-		{sliders("speaker")}
-		{sliders("microphone")}
+		<box vertical
+			cssClasses={["control-volsliders"]}>
+			{sliders("speaker")}
+			{sliders("microphone")}
+		</box>
 		{toggles()}
 	</box>	
 }

@@ -20,13 +20,14 @@ function powerItem(icon: string, cmd: string, exec: string): JSX.Element {
 
 function powerBox(): JSX.Element {
 	return <Gtk.ScrolledWindow
+		cssClasses={["power-box"]}
 		vscrollbarPolicy={Gtk.PolicyType.NEVER}
 		hscrollbarPolicy={Gtk.PolicyType.NEVER}>
-		<centerbox>
-			{powerItem("󰿅", "Logout", "hyprctl dispatch exit")}
-			{powerItem("󰐥", "Shutdown", "fctl poweroff")}
-			{powerItem("󰜉", "Reboot", "fctl reboot")}
-		</centerbox>
+		<box>
+			{powerItem("logout", "Logout", "hyprctl dispatch exit")}
+			{powerItem("shutdown", "Shutdown", "fctl poweroff")}
+			{powerItem("reboot", "Reboot", "fctl reboot")}
+		</box>
 	</Gtk.ScrolledWindow>
 }
 
@@ -35,10 +36,11 @@ export default function(): JSX.Element {
 		visible={false}
 		name={"power"}
 		namespace={"carbon-power"}
-		anchor={Astal.WindowAnchor.NONE}
+		anchor={Astal.WindowAnchor.BOTTOM}
 		exclusivity={Astal.Exclusivity.NORMAL}
 		keymode={Astal.Keymode.EXCLUSIVE}
 		layer={Astal.Layer.OVERLAY}
+		margin={-5}
 		application={App}
 		onKeyPressed={(_, keyval) => {
 			if (keyval === Gdk.KEY_Escape) {

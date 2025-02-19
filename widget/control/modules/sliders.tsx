@@ -7,8 +7,7 @@ export function sliders(type: string): JSX.Element {
 	const device = type === "speaker"
 		? Wp.get_default()?.audio.defaultSpeaker!
 		: Wp.get_default()?.audio.defaultMicrophone!
-	return <box
-		cssClasses={["control-volsliders"]}>
+	return <box>
 		{type === "speaker"
 			? <image iconName={bind(device, "volumeIcon")} cssClasses={["volicon"]}/>
 			: <label label={"󰍬"} cssClasses={["volicon"]}/>}

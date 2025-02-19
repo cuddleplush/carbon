@@ -67,8 +67,7 @@ export default function NotificationList() {
 				end_widget={
 					<box
 						halign={Gtk.Align.START}
-						valign={Gtk.Align.CENTER}
-						spacing={8}>
+						valign={Gtk.Align.CENTER}>
 						<Controls btn="trash" cssClasses={["notif-btn"]}/>
 						<Controls btn="dnd" cssClasses={["notif-btn"]}/>
 					</box>
