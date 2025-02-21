@@ -9,7 +9,16 @@ export function sliders(type: string): JSX.Element {
 		: Wp.get_default()?.audio.defaultMicrophone!
 	return <box>
 		{type === "speaker"
-			? <image iconName={bind(device, "volumeIcon")} cssClasses={["volicon"]}/>
+			? <label
+				label={bind(device, "volume").as((v => {
+					return v <= 0 ? "󰝟"
+						: v <= 0.33 && v < 0.66 ? "󰕿"
+						: v > 0.33 && v < 0.99 ? "󰖀"
+						: v >= 0.99 ? "󰕾"
+						: "null"
+				}))}
+				cssClasses={["volicon"]}>
+			</label>
 			: <label label={"󰍬"} cssClasses={["volicon"]}/>}
 		<slider
 			cursor={Gdk.Cursor.new_from_name('pointer', null)}
@@ -20,7 +29,7 @@ export function sliders(type: string): JSX.Element {
 			onChangeValue={(self) => {
 				device.volume = self.value
 			}}
-			value={bind(device, "volume")} >
+			value={bind(device, "volume")}>
 		</slider>
 	</box>
 }

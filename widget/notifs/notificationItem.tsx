@@ -98,7 +98,7 @@ export function NotificationItem(
 	let icon: Gtk.Widget | null;
 	if (notification.appIcon) {
 		if (notification.appName === "grimblast") {
-			icon = Gtk.Image.new_from_icon_name("dialog-information-symbolic");
+			icon = Gtk.Label.new("󰋽");
 		} else if (fileExists(notification.appIcon)) {
 			icon = Gtk.Image.new_from_file(notification.appIcon);
 		} else {
@@ -107,7 +107,7 @@ export function NotificationItem(
 	} else if (isIcon(notification.desktopEntry)) {
 		icon = Gtk.Image.new_from_icon_name(notification.desktopEntry);
 	} else {
-		icon = Gtk.Image.new_from_icon_name("dialog-information-symbolic");
+		icon = Gtk.Label.new("󰋽");
 	}
 
 	const actionBox = notification.get_actions().length > 0
@@ -135,7 +135,7 @@ export function NotificationItem(
 				<label label={notification.appName} halign={Gtk.Align.START} hexpand={true} />
 				<button
 					halign={Gtk.Align.END}
-					iconName="window-close-symbolic"
+					label="󰅖"
 					cssClasses={["close-button"]}
 					onClicked={() => {
 						notification.dismiss();
