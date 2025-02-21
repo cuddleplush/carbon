@@ -12,7 +12,7 @@ import NotificationCenter 	from "./widget/notifs/notificationCenter"
 import CloseBox 			from "./widget/closebox/closebox"
 
 // Apply our scss using the sassc transpiler
-style();
+style(false, false);
 
 // Start the shell
 App.start({

@@ -1,97 +1,84 @@
-import AstalWp from "gi://AstalWp?version=0.1";
+import { bind } from "astal"
+import { App, Astal, Gtk, hook } from "astal/gtk4"
+import { timeout } from "astal/time"
+import Variable from "astal/variable"
+import Wp from "gi://AstalWp"
 
-import { Gtk, Widget, Astal, hook } from "astal/gtk4";
-import { bind, timeout } from "astal";
+function OnScreenProgress({ visible }: { visible: Variable<boolean> }) {
+	const speaker = Wp.get_default()!.get_default_speaker()
+	const microphone = Wp.get_default()!.get_default_microphone()
 
-import Progress from "./progress";
+	const iconName = Variable("")
+	const value = Variable(0)
+	const muted = Variable(true)
 
-const DELAY = 2500;
-
-function OnScreenProgress(window: Astal.Window, vertical: boolean): Astal.Box {
-	const speaker = AstalWp.get_default()?.audio.defaultSpeaker!;
-	const microphone = AstalWp.get_default()?.audio.defaultMicrophone!;
-
-	const indicator = Widget.Image({
-		cssClasses: ["osd-icon"],
-		pixelSize: 20,
-		iconName: bind(speaker, "volumeIcon"),
-	});
-
-	const progress = Progress({
-		vertical,
-		width: vertical ? 48 : 400,
-		height: vertical ? 400 : 48,
-		child: Widget.Box({
-			cssClasses: ["indicatorBox"],
-			child: indicator,
-		}),
-	});
-
-	let count = 0;
-	function show(value: number, muted: boolean, icon: string): void {
-		window.visible = true;
-		indicator.iconName = icon;
-		progress.setValue(value, muted);
-		count++;
-		timeout(DELAY, () => {
-			count--;
-			if (count === 0) window.visible = false;
-		});
+	let count = 0
+	function show(v: number, mute: boolean, icon: string) {
+		visible.set(true)
+		value.set(v)
+		iconName.set(icon)
+		muted.set(mute)
+		count++
+		timeout(2000, () => {
+			count--
+			if (count === 0) visible.set(false)
+		})
 	}
 
-	return Widget.Box({
-		cssClasses: ["indicator"],
-		halign: Gtk.Align.CENTER,
-		valign: Gtk.Align.END,
-		heightRequest: 2,
-		// css: "min-height: 2px;",
-		child: progress,
-		setup: () => {
-			hook(progress, microphone, "notify::mute", () => {
-				progress.setMute(microphone.mute);
-				return show(
-					microphone.volume,
-					microphone.mute,
-					microphone.mute === true 
-						? "microphone-disabled-symbolic"
-						: "microphone-sensitivity-high-symbolic"
-				)
-			});
-			hook(progress, speaker, "notify::volume", () => {
-				return show(
-					speaker.volume,
-					speaker.mute,
-					"audio-speakers-symbolic",
-				);
-			});
-			hook(progress, microphone, "notify::volume", () => {
-				return show(
-					microphone.volume,
-					microphone.mute,
-					microphone.volume <= 0 ? "microphone-disabled-symbolic"
-						: microphone.volume <= 0.33 && microphone.volume < 0.66 ? "microphone-sensitivity-low-symbolic"
-						: microphone.volume > 0.33 && microphone.volume < 0.99 ? "microphone-sensitivity-medium-symbolic"
-						: microphone.volume >= 0.99 ? "microphone-sensitivity-high-symbolic"
-						: "null"
-				);
-			});
-		},
-	});
+	return <box
+		setup={(self) => {
+			if (speaker) {
+				hook(self, speaker, "notify::volume", () => {
+					show(speaker.volume, false,
+						speaker.volume <= 0 ? "󰝟"
+							: speaker.volume <= 0.33 && speaker.volume < 0.66 ? "󰕿"
+							: speaker.volume > 0.33 && speaker.volume < 0.99 ? "󰖀"
+							: speaker.volume >= 0.99 ? "󰕾"
+							: "null"
+					)
+				})
+			}
+
+			if (microphone) {
+				hook(self, microphone, "notify::volume", () => {
+					show(microphone.volume, microphone.mute ? true : false,
+						microphone.volume <= 0 || microphone.mute ? "󰍭" : "󰍬"
+					)
+				})
+
+				hook(self, microphone, "notify::mute", () => {
+					show(microphone.volume, microphone.mute ? true : false, microphone.mute ? "󰍭" : "󰍬")
+				})
+			}
+		}}
+		visible={visible()}>
+
+		<box cssClasses={["osd"]}>
+			<label label={iconName()} cssClasses={["osd-icon"]}/>
+			<levelbar
+				cssClasses={bind(muted).as((m => {
+					return m ? ["osd-fill", "muted"] : ["osd-fill"] 
+				}))}
+				valign={Gtk.Align.CENTER} 
+				widthRequest={300} 
+				value={value()} 
+				heightRequest={48}>
+			</levelbar>
+		</box>
+	</box>
 }
 
-export default function(): JSX.Element {
+export default function() {
+	const visible = Variable(false)
+
 	return <window
-		visible={false}
-		cssClasses={["OSD"]}
+		visible={bind(visible)}
 		namespace="osd"
+		name={"osd"}
+		margin={-5}
+		application={App}
 		layer={Astal.Layer.OVERLAY}
-		anchor={Astal.WindowAnchor.BOTTOM}
-		setup={(self) => {
-			self.set_child(
-				<box cssClasses={["osd"]} vertical={true}>
-					{OnScreenProgress(self, false)}
-				</box>,
-			);
-		}}
-	></window>
+		anchor={Astal.WindowAnchor.BOTTOM}>
+		<OnScreenProgress visible={visible} />
+	</window>
 }

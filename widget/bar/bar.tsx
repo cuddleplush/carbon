@@ -11,7 +11,7 @@ import Lang 	 		from "./modules/language"
 import Date 	 		from "./modules/dateTime"
 import NotifBell 		from "./modules/notificationBell"
 
-import { barFloat, barSplit } from "../../lib/vars"
+import { barBorders, barFloat } from "../../lib/vars"
 
 function leftModules(gdkmonitor: Gdk.Monitor): JSX.Element {
 	return <box
@@ -27,10 +27,6 @@ function centerModules(): JSX.Element {
 	return <box 
 		spacing={8}
 		halign={Gtk.Align.CENTER} >
-		{/* The Player module should be in the center if the bar is split*/}
-		{bind(barSplit).as((value) => value === true
-			? <Player/>
-			: <box/>)}
 	</box>
 }
 
@@ -38,10 +34,7 @@ function rightModules(): JSX.Element {
 	return <box
 		spacing={8}
 		halign={Gtk.Align.END} >
-		{/* The Player module should be on the right if the bar is not split*/}
-		{bind(barSplit).as((value) => value === false
-			? <Player/>
-			: <box/>)}
+		<Player/>
 		<SysTray/>
 		<Mute/>
 		<Lang/>

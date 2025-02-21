@@ -1,44 +1,35 @@
 @use "../colors" as *;
+@use "../variables" as *;
 
-.OSD,
 .osd {
-  background: transparent;
-  icon {
-    font-size: 16px;
-    margin-left: 16px;
-  }
-}
-
-.indicator .progress {
-  padding: 0px;
-
-  border: 8px solid $bg;
-  border-radius: 0px;
-  margin-bottom: 20px;
-  background-color: $bg3;
-
-  min-width: 400px;
   min-height: 48px;
+  background-color: $bg;
+  box-shadow: $box-shadow;
+  margin: 15px;
 
-  .fill {
-    transition: background-color 3s ease-in-out;
-    border-radius: 0px;
-    background-color: $fg;
+  .osd-icon {
     color: $fg;
-    transition: min-width 0.1s;
-    &.muted {
+    background-color: $bg2;
+    min-width: 48px;
+  }
+
+  label {
+    font-size: 23px;
+  }
+
+  .osd-fill {
+    block {
+      background-color: $bg6;
+      &.empty {
+        background-color: $bg3;
+      }
+    }
+
+    &.muted block {
       background-color: $red;
+      &.empty {
+        background-color: $bg3;
+      }
     }
   }
 }
-
-.osd-icon {
-  color: $fg;
-  padding: 0 0 0 13px;
-}
-
-.indicatorBox {
-  background-color: $bg2;
-  min-width: 48px;
-}
-

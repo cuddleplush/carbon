@@ -146,13 +146,11 @@
         }
       }
     }
-  @if $spacers {
     >button {
       &:not(:first-child) {
         border-left: solid 1px $bg4;
       }
     }
-  }
     &.empty {
       margin: 0 0;
     }

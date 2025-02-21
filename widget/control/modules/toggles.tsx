@@ -1,7 +1,7 @@
 import { Variable, bind } from "astal"
 import { Gtk } from "astal/gtk4"
 
-import { debug, barFloat, barSplit, nightLight } from "../../../lib/vars"
+import { barFloat, barBorders, barSpacers, nightLight } from "../../../lib/vars"
 
 function toggleButton(toggleable: Variable<boolean>, label: string): JSX.Element {
 	return <button
@@ -30,11 +30,11 @@ export function toggles(): JSX.Element {
 	return <box cssClasses={["toggles"]} spacing={8} vertical>
 		<box spacing={8}>
 			{toggleButton(barFloat, "Floating Bar")}
-			{toggleButton(barSplit, "Split Bar")}
+			{toggleButton(nightLight, "Night Light")}
 		</box>
 		<box spacing={8}>
-			{toggleButton(debug, "Debug Mode")}
-			{toggleButton(nightLight, "Night Light")}
+			{toggleButton(barBorders, "Borders")}
+			{toggleButton(barSpacers, "Spacers")}
 		</box>
 	</box>
 }
