@@ -5,7 +5,6 @@ import { timeout, Variable } from "astal";
 import GObject, { register, signal } from "astal/gobject";
 import { App, Astal } from "astal/gtk4";
 
-// import { dumpNotification } from "./NotificationDump";
 import { WidgetEntry } from "./notificationItem";
 import { NotificationItem } from "./notificationItem";
 
@@ -29,18 +28,17 @@ class NotificationTracker extends GObject.Object {
         const notifd = AstalNotifd.get_default();
 
         notifd.connect("notified", (_, id) => {
-            // console.log("notification created", id);
             const notification = notifd.get_notification(id);
-            // dumpNotification(notification);
 
             const existingWidget = this.#widgets.get(id);
 			const newWidget = NotificationItem({
 				notification,
 				onHoverLeave: () => {
 					timeout(100, () => {
-						// print("attempted destroy");
-						this.#widgets.delete(id);
-						this.emit("destroy", newWidget);
+						if (this.#widgets.get(id)) {
+							this.#widgets.delete(id);
+							this.emit("destroy", newWidget);
+						}
 					});
 				},
 				cssClasses: ["Notification"],
@@ -64,8 +62,6 @@ class NotificationTracker extends GObject.Object {
         });
 
         notifd.connect("resolved", (_, id) => {
-            // console.log("notification resolved", id);
-
             const widget = this.#widgets.get(id);
             if (widget) {
                 this.#widgets.delete(id);
@@ -92,7 +88,6 @@ export default function NotificationPopup() {
         box.remove(prev.widget);
     });
     notifs.connect("destroy", (_, entry: WidgetEntry) => {
-		// print("destroy called")
         box.remove(entry.widget);
         if (box.get_first_child() === null) {
             windowVisible.set(false);

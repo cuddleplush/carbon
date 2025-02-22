@@ -35,43 +35,44 @@ export default function NotificationList() {
 			}[btn],
 		}));
 
-		return (
-			<button
-				onButtonPressed={(_, event) => {
-					if (event.get_button() === Gdk.BUTTON_PRIMARY) {
-						Bindings.get().command();
-					}
-				}}
-				tooltip_markup={bind(Bindings).as((t) => t.tooltip)}
-				{...props}
-			>
-				<label label={bind(Bindings).as((i) => i.icon)} valign={Gtk.Align.CENTER} halign={Gtk.Align.CENTER} />
-			</button>
-		);
+		return <button
+			onButtonPressed={(_, event) => {
+				if (event.get_button() === Gdk.BUTTON_PRIMARY) {
+					Bindings.get().command();
+				}
+			}}
+			tooltip_markup={bind(Bindings).as((t) => t.tooltip)}
+			{...props}
+		>
+			<label label={bind(Bindings).as((i) => i.icon)} valign={Gtk.Align.CENTER} halign={Gtk.Align.CENTER} />
+		</button>
 	};
 
 	function notifList() {
-		return <box name={"NotificationCenter"} cssClasses={["notifCenter"]} vertical={true} halign={Gtk.Align.FILL} valign={Gtk.Align.FILL} hexpand={false}>
+		return <box
+			name={"NotificationCenter"} 
+			cssClasses={["notifCenter"]} 
+			vertical={true} 
+			halign={Gtk.Align.FILL} 
+			valign={Gtk.Align.FILL} 
+			hexpand={false}>
 			<centerbox
 				cssClasses={["notifCenterHeader"]}
 				halign={Gtk.Align.FILL}
-				start_widget={
-					<box cssClasses={["notifCenterLabel"]} hexpand>
-						<label
-							label="Notifications"
-							valign={Gtk.Align.CENTER}
-							halign={Gtk.Align.START}>
-						</label>
-					</box>
-				}
-				end_widget={
-					<box
-						halign={Gtk.Align.START}
-						valign={Gtk.Align.CENTER}>
-						<Controls btn="trash" cssClasses={["notif-btn"]}/>
-						<Controls btn="dnd" cssClasses={["notif-btn"]}/>
-					</box>
-				}>
+				start_widget= <box cssClasses={["notifCenterLabel"]} hexpand>
+					<label
+						label="Notifications"
+						valign={Gtk.Align.CENTER}
+						halign={Gtk.Align.START}>
+					</label>
+				</box>
+				end_widget= <box
+					halign={Gtk.Align.START}
+					valign={Gtk.Align.CENTER}>
+					<Controls btn="trash" cssClasses={["notif-btn"]}/>
+					<Controls btn="dnd" cssClasses={["notif-btn"]}/>
+				</box>
+			>
 			</centerbox>
 			<Gtk.ScrolledWindow
 				vscrollbar-policy={Gtk.PolicyType.AUTOMATIC}
@@ -88,19 +89,21 @@ export default function NotificationList() {
 					widthRequest={350}
 					heightRequest={1}>
 					{bind(Notif, "notifications").as((nitems) => {
-						if (nitems) {
+						if (nitems.length > 0) {
 							nitems.sort((a, b) => b.time - a.time);
+							return nitems.map((nitem) => (
+								NotificationItem(
+									{
+										notification: nitem,
+										onHoverLeave: () => { },
+										cssClasses: ["Notification", "contained"],
+										setup: () => {}
+									}
+								).widget
+							))
+						} else {
+							return <label label={"No Notifications. All caught up!"}/>
 						}
-						return nitems.map((nitem) => (
-							NotificationItem(
-								{
-									notification: nitem,
-									onHoverLeave: () => { },
-									cssClasses: ["Notification", "contained"],
-									setup: () => {}
-								}
-							).widget
-						));
 					})}
 				</box>
 			</Gtk.ScrolledWindow>
@@ -119,8 +122,12 @@ export default function NotificationList() {
 		onKeyPressed={(_, keyval) => {
 			if (keyval === Gdk.KEY_Escape) {
 				hideWindows()
+			} else if (keyval === Gdk.KEY_c) {
+				Notif.notifications.forEach(notification => {
+					notification.dismiss()
+				});
 			}
-		}} >
+		}}>
 		{notifList()}
 	</window>
 }

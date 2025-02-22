@@ -161,6 +161,10 @@
 
   .notifCenterContainer {
     padding: unset;
+    > label {
+      margin-top: 16px;
+      color: $bg4;
+    }
   }
 
   .notifCenterLabel {
