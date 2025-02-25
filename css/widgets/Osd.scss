@@ -1,0 +1,36 @@
+@use "../colors" as *;
+@use "../variables" as *;
+
+.osd {
+  min-height: 48px;
+  background-color: $bgalt;
+  box-shadow: $box-shadow;
+  padding: 8px;
+  margin: 15px;
+
+  .osd-icon {
+    color: $fg;
+    background-color: $bg2;
+    min-width: 48px;
+  }
+
+  label {
+    font-size: 23px;
+  }
+
+  .osd-fill {
+    block {
+      background-color: $bg6;
+      &.empty {
+        background-color: $bg3;
+      }
+    }
+
+    &.muted block {
+      background-color: $red;
+      &.empty {
+        background-color: $bg3;
+      }
+    }
+  }
+}

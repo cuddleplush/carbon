@@ -1,0 +1,163 @@
+@use "../colors" as *;
+@use "../variables" as *;
+
+.bar {
+  background-color: $bg;
+  color: $fg;
+  min-height: 45px;
+  padding: 0px 8px;
+  >centerbox {
+    min-height: 45px;
+    padding: 0px 8px 0px 8px;
+  }
+
+  .icon {
+    min-height: 29px;
+    min-width: 29px;
+    background-color: $bg3;
+    font-size: 16px;
+    margin: 8px 0;
+    @if $borders {
+      border: solid 1px $bg4;
+      border-right: none;
+      min-height: 27px;
+      min-width: 27px;
+    }
+    @if $spacers {
+      border-right: solid 1px $bg4;
+    }
+  }
+
+  .module {
+    padding: 0px 8px;
+    transition: all 300ms cubic-bezier(0, 0, 0.2, 1);
+    margin: 8px 0;
+    background-color: $bg2;
+    font-size: 15px;
+
+    @if $borders {
+      border: solid 1px $bg4;
+    }
+
+    &.active {
+      background-color: $bg3;
+    }
+
+    &.focused {
+      background-color: $bg6;
+      label {
+        font-weight: bold;
+        color: $bg;
+      }
+    }
+
+    &:not(.focused):not(.tray):hover {
+      background-color: $bg4;
+      label {
+        font-weight: bold;
+      }
+    }
+
+    &.empty {
+      margin-left: 0px;
+    }
+
+    &.muted {
+      color: $red;
+    }
+
+    &.icon-button {
+      padding: 0;
+      min-height: 29px;
+      min-width: 29px;
+      background-color: $bg3;
+      font-size: 20px;
+      &:hover {
+        background-color: $bg4;
+      }
+      @if $borders {
+        min-height: 27px;
+        min-width: 27px;
+      }
+    }
+
+    &.workspace {
+      min-width: 60px;
+      padding: unset;
+      margin-right: 8px;
+      &:last-child {
+        margin-right: 0;
+      }
+
+      @if $borders {
+        border-left: none;
+        margin-right: 0;
+        &:first-child {
+          border-left: solid 1px $bg4;
+        }
+      }
+
+      @if $spacers {
+        margin-right: 0;
+        border-left: solid 1px $bg4;
+        &:first-child {
+          border-left: none;
+        }
+      }
+
+      label {
+        transition: background-color 300ms cubic-bezier(0, 0, 0.2, 1);
+      }
+
+      &.occupied {
+        background-color: $bg3;
+      }
+
+      &:not(.occupied) {
+        background-color: $bg2;
+        label {
+          color: $bg4;
+        }
+      }
+
+      &.active {
+        label {
+          background-color: $bg6;
+          color: $bg;
+          font-weight: bold;
+        }
+      }
+
+      &:not(.active):hover {
+        label {
+          background-color: $bg4;
+          font-weight: bold;
+          color: $fg;
+        }
+      }
+    }
+  }
+
+  .workspace-tasks {
+    margin-right: 8px;
+    @if $borders {
+      >button {
+        &:not(:first-child) {
+          border-left: none;
+        }
+      }
+    }
+    >button {
+      &:not(:first-child) {
+        border-left: solid 1px $bg4;
+      }
+    }
+    &.empty {
+      margin: 0 0;
+    }
+  }
+
+  .tray-item:hover {
+    opacity: 0.5;
+  }
+}

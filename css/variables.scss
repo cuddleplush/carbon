@@ -1,0 +1,7 @@
+
+@use "sass:color";
+@use "./colors" as *;
+
+$borders: false;
+$spacers: false;
+$box-shadow: color.adjust($black, $alpha: - 0.5) 0px 0px 6px 3px;
