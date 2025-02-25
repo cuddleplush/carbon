@@ -20,6 +20,10 @@ function Task(client: Hyprland.Client): JSX.Element {
 			client.workspace.focus();
 		}}
 		cssClasses={className()}
+		onDestroy={() => {
+			className.drop()
+			print("task destroyed")
+		}}
 		cursor={Gdk.Cursor.new_from_name('pointer', null)}>
 		<label
 			maxWidthChars={bind(hyprland, "focusedWorkspace").as(() => {

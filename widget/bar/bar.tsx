@@ -11,7 +11,7 @@ import Lang 	 		from "./modules/language"
 import Date 	 		from "./modules/dateTime"
 import NotifBell 		from "./modules/notificationBell"
 
-import { barBorders, barFloat } from "../../lib/vars"
+import { barFloat } from "../../lib/vars"
 
 function leftModules(gdkmonitor: Gdk.Monitor): JSX.Element {
 	return <box

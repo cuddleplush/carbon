@@ -43,6 +43,7 @@ export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 			)
 			return <button
 				cssClasses={className()}
+				onDestroy={() => className.drop()}
 				label={icons[iconIndex]}
 				cursor={Gdk.Cursor.new_from_name('pointer', null)}
 				onButtonPressed={() => dispatch(id)}>
