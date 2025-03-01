@@ -3,7 +3,8 @@
 import Hyprland from "gi://AstalHyprland";
 
 import { App, Astal, Gtk, Gdk } from "astal/gtk3"
-import { bind, Variable } from "astal";
+import { bind, exec, Variable } from "astal";
+import GLib from "gi://GLib";
 
 const { TOP, BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor
 const { IGNORE } = Astal.Exclusivity
@@ -67,6 +68,41 @@ separator {
 
 `,
     main: () => {
+		print(exec("bash -c 'echo $XDPH_WINDOW_SHARING_LIST > /home/max/env'"))
+		
+		interface Toplevel {
+			id: number;
+			class: string;
+			title: string;
+		}
+
+		function parse(toplevelList: string): Toplevel[] {
+			const regex = /\[HC>\]|\[HT>\]/;
+			const toplevels: Toplevel[] = [];
+
+			const parts = toplevelList.split('[HE>]');
+			for (const part of parts) {
+				const split = part.split(regex).filter(Boolean);
+				if (split.length !== 3) {
+					continue;
+				}
+
+				const id = parseInt(split[0], 10);
+				if (isNaN(id)) {
+					continue;
+				}
+
+				const classPart = split[1];
+				const title = split[2];
+
+				toplevels.push({ id, class: classPart, title });
+			}
+
+			return toplevels;
+		}
+	
+		const toplevels = parse(GLib.getenv("XDPH_WINDOW_SHARING_LIST")!)
+
 		const hyprland = Hyprland.get_default()
 
 		function picked(pickedElement: Hyprland.Monitor | Hyprland.Client) {
@@ -75,7 +111,8 @@ separator {
 				print(`[SELECTION]/screen:${monitor.name}`)
 			} else {
 				let client = pickedElement
-				print(`[SELECTION]/window:${client.address}`)
+				let toplevel = toplevels.find((t) => t.class && t.title == client.class && client.title)
+				print(`[SELECTION]/window:${toplevel!.id}`)
 			}
 			App.quit();
 		}

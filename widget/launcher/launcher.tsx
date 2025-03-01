@@ -84,9 +84,10 @@ export default function() {
 		name="launcher"
 		anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT | Astal.WindowAnchor.BOTTOM}
 		layer={Astal.Layer.OVERLAY}
-		exclusivity={Astal.Exclusivity.NORMAL}
+		exclusivity={Astal.Exclusivity.EXCLUSIVE}
 		keymode={Astal.Keymode.EXCLUSIVE}
 		margin={-5}
+		margin_left={-15}
 		visible={false}
 		application={App}
 		onShow={() => {

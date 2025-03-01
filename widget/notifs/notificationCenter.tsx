@@ -85,7 +85,7 @@ export default function NotificationList() {
 					vexpand={true}
 					vertical
 					hexpand={false}
-					widthRequest={400}
+					widthRequest={420}
 					heightRequest={1}>
 					{bind(Notif, "notifications").as((nitems) => {
 						if (nitems.length > 0) {
@@ -114,9 +114,10 @@ export default function NotificationList() {
 		name={`notification-center`}
 		anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT | Astal.WindowAnchor.BOTTOM}
 		layer={Astal.Layer.OVERLAY}
-		exclusivity={Astal.Exclusivity.NORMAL}
+		exclusivity={Astal.Exclusivity.EXCLUSIVE}
 		keymode={Astal.Keymode.ON_DEMAND}
 		margin={-5}
+		margin_left={-15}
 		application={App}
 		onKeyPressEvent={(_, event) => {
 			if (event.get_keyval()[1] === Gdk.KEY_Escape) {
