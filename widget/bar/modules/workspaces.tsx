@@ -49,7 +49,7 @@ export default function(gdkmonitor: Gdk.Monitor): JSX.Element {
 		}))
 	}
 
-	return <box>
+	return <box spacing={8}>
 		{Array.from({ length: 5 }, (_, idx) => {
 			const id = idx + (monitorID * 10 + 1);
 			return workspaceButton(id)

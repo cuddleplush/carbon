@@ -84,10 +84,6 @@
     &.workspace {
       min-width: 60px;
       padding: unset;
-      margin-right: 8px;
-      &:last-child {
-        margin-right: 0;
-      }
 
       @if $borders {
         border-left: none;

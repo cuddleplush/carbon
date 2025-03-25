@@ -111,7 +111,7 @@ separator {
 				print(`[SELECTION]/screen:${monitor.name}`)
 			} else {
 				let client = pickedElement
-				let toplevel = toplevels.find((t) => t.class && t.title == client.class && client.title)
+				let toplevel = toplevels.find((t) => t.class == client.class && t.title == client.title)
 				print(`[SELECTION]/window:${toplevel!.id}`)
 			}
 			App.quit();

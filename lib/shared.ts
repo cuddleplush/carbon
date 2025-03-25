@@ -24,5 +24,3 @@ export class MenuItem extends astalify(Gtk.MenuItem) {
         super(props as any)
     }
 }
-
-
